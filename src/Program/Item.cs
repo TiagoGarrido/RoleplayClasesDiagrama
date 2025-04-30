@@ -27,4 +27,31 @@ public class Item
     {
         Durability = Durability + amount;
     }
+
+    public class Hechizo
+    {
+        public string Name { get; }
+        public int Power { get; }
+
+        public Hechizo(string name, int power)
+        {
+            this.Name = name;
+            this.Power = power;
+        }
+    }
+
+    public class LibroHechizos
+    {
+        public List<Hechizo> hechizos = new List<Hechizo>();
+
+        public LibroHechizos(string name, int durability)
+        {
+        }
+
+        public void AgregarHechizo(Hechizo hechizo)
+        {
+            hechizos.Add(hechizo);
+        }
+    }
+    
 }
