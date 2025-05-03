@@ -10,6 +10,24 @@ public class Wizard
     private ArrayList items = new ArrayList();
     private SpellBook spellBook;
     
+    public string Name
+    {
+        get { return name; }
+        set { name = value; }
+    }
+    
+    public int Health
+    {
+        get { return health; }
+        set { health = value; }
+    }
+    
+    public int InitialHealth
+    {
+        get { return initialHealth; }
+        set { initialHealth = value; }
+    }
+    
     public Wizard(string name, int health, SpellBook spellBook)
     {
         this.name = name;
