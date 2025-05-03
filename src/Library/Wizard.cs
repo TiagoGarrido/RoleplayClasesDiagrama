@@ -1,213 +1,115 @@
+using System.Collections;
+
 namespace Library;
 
 public class Wizard
 {
-    private Item spellbook;
-    private Item wand;
-    private Item robe;
-    private Item potion;
     private int health;
     private string name;
+    private int initialHealth;
+    private ArrayList items = new ArrayList();
+    private SpellBook spellBook;
     
-    public Wizard(Item spellbook, Item wand, Item robe, Item potion, int health, string name)
+    public Wizard(string name, int health, SpellBook spellBook)
     {
-        this.spellbook = spellbook;
-        this.wand = wand;
-        this.robe = robe;
-        this.potion = potion;
-        this.health = health;
         this.name = name;
-    }
-   
-    public Item Spellbook
-    {
-        get { return spellbook; }
-        set { spellbook = value; }
+        this.health = health;
+        this.initialHealth = health;
+        this.spellBook = spellBook; 
     }
     
-    public Item Wand
+    public void AddItem(Item item)
     {
-        get { return wand; }
-        set { wand = value; }
-    }
-    
-    public Item Robe
-    {
-        get { return robe; }
-        set { robe = value; }
-    }
-    
-    public Item Potion
-    {
-        get { return potion; }
-        set { potion = value; }
-    }
-    
-    public int Health
-    {
-        get { return health; }
-        set { health = value; }
-    }
-    
-    public string Name
-    {
-        get { return name; }
-        set { name = value; }
-    }
-    
-    public void CastSpell(Item spell)
-    {
-        if (spell != null)
+        if (item != null)
         {
-            Console.WriteLine("Casting " + spell.Name + " with " + wand.Name);
+            this.items.Add(item);
         }
         else
         {
-            Console.WriteLine("Cannot cast null spell.");
+            Console.WriteLine("Item does not exist.");
         }
     }
     
-    public void WearRobe()
+    public void RemoveItem(Item item)
     {
-        if (robe != null)
+        if (item != null)
         {
-            Console.WriteLine("Wearing " + robe.Name);
+            this.items.Remove(item);
         }
         else
         {
-            Console.WriteLine("Cannot wear robe.");
+            Console.WriteLine("Item does not exist.");
         }
     }
     
-    public void DrinkPotion()
+    public int TotalDamage()
     {
-        if (potion != null)
+        int totalDamage = 0;
+        foreach (Item item in this.items)
         {
-            Console.WriteLine("Drinking " + potion.Name);
+            totalDamage += item.AttackValue;
+        }
+        return totalDamage;
+    }
+    
+    public int TotalDefense()
+    {
+        int totalDefense = 0;
+        foreach (Item item in this.items)
+        {
+            totalDefense += item.DefenseValue;
+        }
+        return totalDefense;
+    }
+    
+    public void Attack(Wizard target)
+    {
+        int damage = this.TotalDamage();
+        target.health -= damage;
+        Console.WriteLine($"{this.name} attacks {target.name} for {damage} damage.");
+    }
+    
+    public void CastSpell(Wizard target, Spell spell)
+    {
+        if (this.spellBook.ContainsSpell(spell))
+        {
+            target.health -= spell.AttackValue;
+            Console.WriteLine($"{this.name} casts {spell.Name} on {target.name} for {spell.AttackValue} damage.");
         }
         else
         {
-            Console.WriteLine("Cannot drink potion.");
+            Console.WriteLine($"{this.name} does not know the spell {spell.Name}.");
         }
     }
     
-    public void ShowInventory()
+    public void ReceiveDamage(int damage)
     {
-        Console.WriteLine("Inventory:");
-        if (spellbook != null)
+        this.health -= damage;
+        if (this.health < 0)
         {
-            Console.WriteLine("- " + spellbook.Name);
+            this.health = 0;
         }
-        if (wand != null)
-        {
-            Console.WriteLine("- " + wand.Name);
-        }
-        if (robe != null)
-        {
-            Console.WriteLine("- " + robe.Name);
-        }
-        if (potion != null)
-        {
-            Console.WriteLine("- " + potion.Name);
-        }
+        Console.WriteLine($"{this.name} receives {damage} damage. Remaining health: {this.health}");
     }
-    
-    public void ShowHealth()
+
+    public string GetInfo()
     {
-        Console.WriteLine("Health: " + health);
+        return $"{this.name} - Health: {this.health}/{this.initialHealth}";
     }
     
-    public int Attack()
+    public string GetItemsInfo()
     {
-        int damage = 10; // Base damage
-        if (wand != null)
+        string info = "Items:\n";
+        foreach (Item item in this.items)
         {
-            damage += wand.Damage; // Add wand damage
+            info += $"- {item.Name} (Attack: {item.AttackValue}, Defense: {item.DefenseValue})\n";
         }
-        if (spellbook != null)
-        {
-            damage += spellbook.Damage; // Add spellbook damage
-        }
-        return damage;
+        return info;
     }
     
-    public void NewWand(Item newWand)
+    public void Heal()
     {
-        if (newWand != null)
-        {
-            wand = newWand;
-            Console.WriteLine("Equipped new wand: " + newWand.Name);
-        }
+        this.health = this.initialHealth;
+        Console.WriteLine($"{this.name} has been healed. Health restored to: {this.health}");
     }
-    
-    public void RemoveWand()
-    {
-        if (wand != null)
-        {
-            Console.WriteLine("Removed wand: " + wand.Name);
-            wand = null;
-        }
-        else
-        {
-            Console.WriteLine("No wand to remove.");
-        }
-    }
-    
-    public void NewSpellbook(Item newSpellbook)
-    {
-        if (newSpellbook != null)
-        {
-            spellbook = newSpellbook;
-            Console.WriteLine("Equipped new spellbook: " + newSpellbook.Name);
-        }
-    }
-    
-    public void RemoveSpellbook()
-    {
-        if (spellbook != null)
-        {
-            Console.WriteLine("Removed spellbook: " + spellbook.Name);
-            spellbook = null;
-        }
-        else
-        {
-            Console.WriteLine("No spellbook to remove.");
-        }
-    }
-    
-    public void NewRobe(Item newRobe)
-    {
-        if (newRobe != null)
-        {
-            robe = newRobe;
-            Console.WriteLine("Equipped new robe: " + newRobe.Name);
-        }
-    }
-    
-    public void RemoveRobe()
-    {
-        if (robe != null)
-        {
-            Console.WriteLine("Removed robe: " + robe.Name);
-            robe = null;
-        }
-        else
-        {
-            Console.WriteLine("No robe to remove.");
-        }
-    }
-    
-    public void Defend()
-    {
-        if (robe != null)
-        {
-            Console.WriteLine("Defending with " + robe.Name);
-        }
-        else
-        {
-            Console.WriteLine("Cannot defend without robe.");
-        }
-    }
-    
-    
 }
