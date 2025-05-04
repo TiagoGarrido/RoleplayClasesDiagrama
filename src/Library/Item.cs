@@ -2,57 +2,62 @@
 
 public class Item
 {
-    public string Name { get; }
-    public int Attack { get; }
-    public int Defense { get; }
-    public int Durability { get; private set; }
+    private string name;
+    private int attackValue;
+    private int defenseValue;
+    private int durability;
     
-
+    public string Name
+    {
+        get { return name; }
+        set { name = value; }
+    }
+    
+    public int Attack
+    {
+        get { return attackValue; }
+        set { attackValue = value; }
+    }
+    
+    public int Defense
+    {
+        get { return defenseValue; }
+        set { defenseValue = value; }
+    }
+    
+    public int Durability
+    {
+        get { return durability; }
+        set { durability = value; }
+    }
+    
     public Item(string name, int attack, int defense, int durability)
     {
-        this.Name = name;
-        this.Attack = attack;
-        this.Defense = defense;
-        this.Durability = durability;
+        this.name = name;
+        this.attackValue = attack;
+        this.defenseValue = defense;
+        this.durability = durability;
+    }
+    
+    public int GetAttackValue()
+    {
+        return attackValue;
+    }
+    
+    public int GetDefenseValue()
+    {
+        return defenseValue;
     }
 
     public void UseItem()
     {
-        if (Durability > 0)
+        if (durability > 0)
         {
-            Durability = Durability - 1;
+            durability = durability - 1;
         }
     }
-
     public void RepairItem(int amount)
     {
-        Durability = Durability + amount;
+        durability = durability + amount;
     }
-
-    public class Hechizo
-    {
-        public string Name { get; }
-        public int Power { get; }
-
-        public Hechizo(string name, int power)
-        {
-            this.Name = name;
-            this.Power = power;
-        }
-    }
-
-    public class LibroHechizos
-    {
-        public List<Hechizo> hechizos = new List<Hechizo>();
-
-        public LibroHechizos(string name, int durability)
-        {
-        }
-
-        public void AgregarHechizo(Hechizo hechizo)
-        {
-            hechizos.Add(hechizo);
-        }
-    }
-    
 }

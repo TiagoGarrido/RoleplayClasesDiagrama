@@ -65,7 +65,7 @@ public class Wizard
         int totalDamage = 0;
         foreach (Item item in this.items)
         {
-            totalDamage += item.AttackValue;
+            totalDamage += item.GetAttackValue();
         }
         return totalDamage;
     }
@@ -75,7 +75,7 @@ public class Wizard
         int totalDefense = 0;
         foreach (Item item in this.items)
         {
-            totalDefense += item.DefenseValue;
+            totalDefense += item.GetDefenseValue();
         }
         return totalDefense;
     }
@@ -120,7 +120,7 @@ public class Wizard
         string info = "Items:\n";
         foreach (Item item in this.items)
         {
-            info += $"- {item.Name} (Attack: {item.AttackValue}, Defense: {item.DefenseValue})\n";
+            info += $"- {item.Name} (Attack: {item.GetAttackValue()}, Defense: {item.GetDefenseValue()})\n";
         }
         return info;
     }
