@@ -82,10 +82,17 @@ public class Dwarf
 
     public void Attack(Dwarf target)
     {
-        int damage = this.TotalDamage();
-        target.ReceiveDamage(damage);
-        Console.WriteLine($"{this.name} ataca a {target.name}, entonces genera esta cantidad de daño: {damage}");
-    }
+        if (this.life > 0)
+        {
+            int damage = this.TotalDamage();
+            target.ReceiveDamage(damage);
+            Console.WriteLine($"{this.name} ataca a {target.name} y causa {damage} de daño.");
+        }
+        else
+        {
+            Console.WriteLine($"no puedes atacar porque {this.name} no tiene vida");
+
+        }}
 
     public void ReceiveDamage(int damage)
     {

@@ -61,9 +61,17 @@ public class Elves
 
     public void Attack(Elves target)
     {
-        int damage = this.TotalDamage();
-        target.ReceiveDamage(damage);
-        Console.WriteLine($"{this.name} ataca a {target.name} y causa {damage} de daño.");
+        if (this.vida > 0)
+        {
+            int damage = this.TotalDamage();
+            target.ReceiveDamage(damage);
+            Console.WriteLine($"{this.name} ataca a {target.name} y causa {damage} de daño.");
+        }
+        else
+        {
+                Console.WriteLine($"no puedes atacar porque {this.name} no tiene vida");
+
+        }
     }
 
     public void ReceiveDamage(int damage)

@@ -82,9 +82,17 @@ public class Wizard
     
     public void Attack(Wizard target)
     {
-        int damage = this.TotalDamage();
-        target.health -= damage;
+        if (this.health > 0)
+        {
+            int damage = this.TotalDamage();
+            target.ReceiveDamage(damage);
         Console.WriteLine($"{this.name} attacks {target.name} for {damage} damage.");
+        }
+        else
+        {
+            Console.WriteLine($" {this.name} cannot attack because they have no health left.");
+
+        }
     }
     
     public void CastSpell(Wizard target, Spell spell)

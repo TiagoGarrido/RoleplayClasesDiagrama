@@ -31,12 +31,11 @@ public class Item
         set { durability = value; }
     }
     
-    public Item(string name, int attack, int defense, int durability)
+    public Item(string name, int attack, int defense)
     {
         this.name = name;
         this.attackValue = attack;
-        this.defenseValue = defense;
-        this.durability = durability;
+        this.defenseValue = defense; 
     }
     
     public int GetAttackValue()
