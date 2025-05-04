@@ -64,7 +64,7 @@ public class Dwarf
         int totalattack = 0;
         foreach (Item item in this.items)
         {
-            totalattack += items.Attack;
+            totalattack += item.Attack;
         }
         return totalattack;
     }
@@ -74,7 +74,7 @@ public class Dwarf
         int totalDefense = 0;
         foreach (Item item in this.items)
         {
-            totalDefense += items.Defense;
+            totalDefense += item.Defense;
         }
 
         return totalDefense;
