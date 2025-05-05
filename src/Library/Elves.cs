@@ -4,16 +4,16 @@ using System.Collections;
 public class Elves
 {
     private string name; // Nombre del elfo
-    private int vida; // Vida actual del elfo
-    private int initialVida; // Vida inicial del elfo
+    private int health; // Vida actual del elfo
+    private int initialHealth; // Vida inicial del elfo
     private ArrayList items = new ArrayList(); // Lista de ítems que posee el elfo
 
     // Constructor que inicializa el nombre y la vida del elfo
     public Elves(string name, int vida)
     {
         this.name = name;
-        this.vida = vida;
-        this.initialVida = vida;
+        this.health = vida;
+        this.initialHealth = vida;
     }
 
     // Propiedad para obtener el nombre del elfo
@@ -73,7 +73,7 @@ public class Elves
     // Método para que el elfo ataque a un objetivo
     public void Attack(object target)
     {
-        if (this.vida > 0) // Verifica si el elfo tiene vida
+        if (this.health > 0) // Verifica si el elfo tiene vida
         {
             int damage = this.TotalDamage(); // Calcula el daño total
 
@@ -106,22 +106,22 @@ public class Elves
     // Método para que el elfo reciba daño
     public void ReceiveDamage(int damage)
     {
-        this.vida -= damage; // Reduce la vida del elfo
-        if (this.vida < 0) this.vida = 0; // Asegura que la vida no sea negativa
-        Console.WriteLine($"{this.name} recibe {damage} de daño. Vida restante: {this.vida}");
+        this.health -= damage; // Reduce la vida del elfo
+        if (this.health < 0) this.health = 0; // Asegura que la vida no sea negativa
+        Console.WriteLine($"{this.name} recibe {damage} de daño. Vida restante: {this.health}");
     }
 
     // Método para curar al elfo y restaurar su vida inicial
     public void Heal()
     {
-        this.vida = this.initialVida; // Restaura la vida al valor inicial
-        Console.WriteLine($"{this.name} ha sido curado. Vida restaurada a: {this.vida}");
+        this.health = this.initialHealth; // Restaura la vida al valor inicial
+        Console.WriteLine($"{this.name} ha sido curado. Vida restaurada a: {this.health}");
     }
 
     // Método para obtener información detallada del elfo
     public string GetInfo()
     {
-        string info = $"Nombre: {this.name}, Vida: {this.vida}\nItems:\n";
+        string info = $"Nombre: {this.name}, Vida: {this.health}\nItems:\n";
         foreach (Item item in this.items)
         {
             info += $"- {item.Name} (Ataque: {item.Attack}, Defensa: {item.Defense})\n"; // Lista los ítems
