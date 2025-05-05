@@ -151,7 +151,7 @@ public class Wizard
         }
     }
     
-    // Recibe daño y reduce la salud
+    // Recibe daño y reduce la vida del personaje
     public void ReceiveDamage(int damage)
     {
         this.health -= damage;
@@ -162,7 +162,7 @@ public class Wizard
         Console.WriteLine($"{this.name} receives {damage} damage. Remaining health: {this.health}");
     }
 
-    // Devuelve un string con la salud del mago
+    // Devuelve un string con la vida del mago
     public string GetInfo()
     {
         return $"{this.name} - Health: {this.health}/{this.initialHealth}";
@@ -179,7 +179,7 @@ public class Wizard
         return info;
     }
     
-    // Restaura la salud del mago a su valor inicial
+    // Restaura la vida del mago a su valor inicial
     public void Heal()
     {
         this.health = this.initialHealth;
