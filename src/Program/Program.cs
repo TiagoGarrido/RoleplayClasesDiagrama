@@ -54,7 +54,7 @@ class Program
         elfo1.Attack(mago2);
         Console.WriteLine(mago2.GetInfo());
 
-        // Mostrar información final de los personajes
+        // Mostrar informacion final de los personajes
         Console.WriteLine(enano1.GetInfo());
         Console.WriteLine(enano2.GetInfo());
         Console.WriteLine(mago1.GetInfo());

@@ -49,6 +49,4 @@ public class Item
     {
         return defenseValue;
     }
-
-  
 }
