@@ -44,6 +44,6 @@ class Program
         mago1.Attack(mago2); 
         mago1.CastSpell(mago2, bolaDeFuego); 
         enano1.Attack(enano2); 
-        elfo1.Attack(elfo2); 
+        elfo1.Attack(mago2);
     }
 }

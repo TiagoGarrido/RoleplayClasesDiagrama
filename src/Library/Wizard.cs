@@ -80,31 +80,67 @@ public class Wizard
         return totalDefense;
     }
     
-    public void Attack(Wizard target)
+    public void Attack(object target)
     {
         if (this.health > 0)
         {
             int damage = this.TotalDamage();
-            target.ReceiveDamage(damage);
-        Console.WriteLine($"{this.name} attacks {target.name} for {damage} damage.");
+
+            if (target is Dwarf dwarf)
+            {
+                dwarf.ReceiveDamage(damage);
+                Console.WriteLine($"{this.name} ataca al enano {dwarf.Name} y causa {damage} de daño.");
+            }
+            else if (target is Elves elf)
+            {
+                elf.ReceiveDamage(damage);
+                Console.WriteLine($"{this.name} ataca al elfo {elf.Name} y causa {damage} de daño.");
+            }
+            else if (target is Wizard wizard)
+            {
+                wizard.ReceiveDamage(damage);
+                Console.WriteLine($"{this.name} ataca a otro mago {wizard.Name} y causa {damage} de daño.");
+            }
+            else
+            {
+                Console.WriteLine($"{this.name} no puede atacar al objetivo especificado.");
+            }
         }
         else
         {
-            Console.WriteLine($" {this.name} cannot attack because they have no health left.");
-
+            Console.WriteLine($"No puedes atacar porque {this.name} no tiene vida.");
         }
     }
     
-    public void CastSpell(Wizard target, Spell spell)
+    public void CastSpell(object target, Spell spell)
     {
         if (this.spellBook.ContainsSpell(spell))
         {
-            target.health -= spell.AttackValue;
-            Console.WriteLine($"{this.name} casts {spell.Name} on {target.name} for {spell.AttackValue} damage.");
+            int damage = spell.AttackValue;
+
+            if (target is Wizard wizard)
+            {
+                wizard.ReceiveDamage(damage);
+                Console.WriteLine($"{this.name} lanza {spell.Name} al mago {wizard.Name} causando {damage} de daño.");
+            }
+            else if (target is Dwarf dwarf)
+            {
+                dwarf.ReceiveDamage(damage);
+                Console.WriteLine($"{this.name} lanza {spell.Name} al enano {dwarf.Name} causando {damage} de daño.");
+            }
+            else if (target is Elves elf)
+            {
+                elf.ReceiveDamage(damage);
+                Console.WriteLine($"{this.name} lanza {spell.Name} al elfo {elf.Name} causando {damage} de daño.");
+            }
+            else
+            {
+                Console.WriteLine($"{this.name} no puede lanzar {spell.Name} al objetivo especificado.");
+            }
         }
         else
         {
-            Console.WriteLine($"{this.name} does not know the spell {spell.Name}.");
+            Console.WriteLine($"{this.name} no conoce el hechizo {spell.Name}.");
         }
     }
     

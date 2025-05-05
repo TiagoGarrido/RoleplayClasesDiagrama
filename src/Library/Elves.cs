@@ -15,6 +15,11 @@ public class Elves
         this.initialVida = vida;
     }
 
+    public string Name
+    {
+        get { return name; }
+    }
+
     public void AddItem(Item item)
     {
         if (item != null)
@@ -59,18 +64,30 @@ public class Elves
         return totaldef;
     }
 
-    public void Attack(Elves target)
+    public void Attack(object target)
     {
         if (this.vida > 0)
         {
             int damage = this.TotalDamage();
-            target.ReceiveDamage(damage);
-            Console.WriteLine($"{this.name} ataca a {target.name} y causa {damage} de daño.");
+
+            if (target is Wizard wizard)
+            {
+                wizard.ReceiveDamage(damage);
+                Console.WriteLine($"{this.name} ataca al mago {wizard.Name} y causa {damage} de daño.");
+            }
+            else if (target is Dwarf dwarf)
+            {
+                dwarf.ReceiveDamage(damage);
+                Console.WriteLine($"{this.name} ataca al enano {dwarf.Name} y causa {damage} de daño.");
+            }
+            else
+            {
+                Console.WriteLine($"{this.name} no puede atacar al objetivo especificado.");
+            }
         }
         else
         {
-                Console.WriteLine($"no puedes atacar porque {this.name} no tiene vida");
-
+            Console.WriteLine($"No puedes atacar porque {this.name} no tiene vida.");
         }
     }
 

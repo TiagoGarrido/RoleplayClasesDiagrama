@@ -79,19 +79,37 @@ public class Dwarf
         return totalDefense;
     }
 
-    public void Attack(Dwarf target)
+    public void Attack(object target)
     {
         if (this.life > 0)
         {
             int damage = this.TotalDamage();
-            target.ReceiveDamage(damage);
-            Console.WriteLine($"{this.name} ataca a {target.name} y causa {damage} de daño.");
+
+            if (target is Dwarf dwarf)
+            {
+                dwarf.ReceiveDamage(damage);
+                Console.WriteLine($"{this.name} ataca al enano {dwarf.Name} y causa {damage} de daño.");
+            }
+            else if (target is Wizard wizard)
+            {
+                wizard.ReceiveDamage(damage);
+                Console.WriteLine($"{this.name} ataca al mago {wizard.Name} y causa {damage} de daño.");
+            }
+            else if (target is Elves elf)
+            {
+                elf.ReceiveDamage(damage);
+                Console.WriteLine($"{this.name} ataca al elfo {elf.Name} y causa {damage} de daño.");
+            }
+            else
+            {
+                Console.WriteLine($"{this.name} no puede atacar al objetivo especificado.");
+            }
         }
         else
         {
-            Console.WriteLine($"no puedes atacar porque {this.name} no tiene vida");
-
-        }}
+            Console.WriteLine($"No puedes atacar porque {this.name} no tiene vida.");
+        }
+    }
 
     public void ReceiveDamage(int damage)
     {
