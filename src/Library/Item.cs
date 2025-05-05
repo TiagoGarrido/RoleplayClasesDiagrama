@@ -38,13 +38,13 @@ public class Item
         this.defenseValue = defense; 
     }
     
-    //Obtiene el valor de ataque del Item
+    //Obtiene el valor de ataque de Item
     public int GetAttackValue()
     {
         return attackValue;
     }
     
-    //Obtiene el valor de defensa del Item
+    //Obtiene el valor de defensa de Item
     public int GetDefenseValue()
     {
         return defenseValue;
