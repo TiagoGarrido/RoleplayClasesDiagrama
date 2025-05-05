@@ -28,11 +28,10 @@ public class Dwarf
         set { initialLife = value; }
     }
 
-    public Dwarf(string name, int life, int initialLife)
+    public Dwarf(string name, int life)
     {
         this.name = name;
         this.life = life;
-        this.initialLife = initialLife;
     }
 
     public void AddItem(Item item)
