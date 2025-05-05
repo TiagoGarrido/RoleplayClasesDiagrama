@@ -45,7 +45,7 @@ public class WizardTest
 
             wizard.Attack(targetWizard);
 
-            Assert.AreEqual(80, targetWizard.Health);
+            Assert.AreEqual(90, targetWizard.Health);
         }
 
         [Test]

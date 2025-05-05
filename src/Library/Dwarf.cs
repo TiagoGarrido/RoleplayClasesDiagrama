@@ -32,6 +32,7 @@ public class Dwarf
     {
         this.name = name;
         this.life = life;
+        this.initialLife = life;
     }
 
     public void AddItem(Item item)
@@ -81,43 +82,44 @@ public class Dwarf
 
     public void Attack(object target)
     {
-        if (this.life > 0)
+        if (this.life > 0) // Verifica si el enano tiene vida
         {
-            int damage = this.TotalDamage();
+            int damage = this.TotalDamage(); // Calcula el daño total
 
-            if (target is Dwarf dwarf)
+            if (target is Dwarf dwarf) // Si el objetivo es otro enano
             {
                 dwarf.ReceiveDamage(damage);
                 Console.WriteLine($"{this.name} ataca al enano {dwarf.Name} y causa {damage} de daño.");
             }
-            else if (target is Wizard wizard)
+            else if (target is Wizard wizard) // Si el objetivo es un mago
             {
                 wizard.ReceiveDamage(damage);
                 Console.WriteLine($"{this.name} ataca al mago {wizard.Name} y causa {damage} de daño.");
             }
-            else if (target is Elves elf)
+            else if (target is Elves elf) // Si el objetivo es un elfo
             {
                 elf.ReceiveDamage(damage);
                 Console.WriteLine($"{this.name} ataca al elfo {elf.Name} y causa {damage} de daño.");
             }
             else
             {
-                Console.WriteLine($"{this.name} no puede atacar al objetivo especificado.");
+                Console.WriteLine($"{this.name} no puede atacar al objetivo especificado."); // Objetivo inválido
             }
         }
         else
         {
-            Console.WriteLine($"No puedes atacar porque {this.name} no tiene vida.");
+            Console.WriteLine($"No puedes atacar porque {this.name} no tiene vida."); // El enano no tiene vida
         }
     }
 
     public void ReceiveDamage(int damage)
     {
         this.life -= damage;
-        if (this.life <= 0)
+        if (this.life < 0)
         {
-            Console.WriteLine($"{this.name} recibe {damage} le queda {this.life} de vida");
+            this.life = 0; // Asegura que la vida no sea negativa
         }
+        Console.WriteLine($"{this.name} recibe {damage} de daño. Vida restante: {this.life}");
     }
 
     public void Heal()

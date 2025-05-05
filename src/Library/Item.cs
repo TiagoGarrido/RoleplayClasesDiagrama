@@ -29,7 +29,7 @@ public class Item
     {
         this.name = name;
         this.attackValue = attack;
-        this.defenseValue = defense; 
+        this.defenseValue = defense;
     }
     
     public int GetAttackValue()
