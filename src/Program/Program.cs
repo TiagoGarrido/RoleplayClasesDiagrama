@@ -6,8 +6,8 @@ class Program
     static void Main(string[] args)
     {
         // Crear un enano
-        Dwarf enano1 = new Dwarf("Gimli", 100, 100);
-        Dwarf enano2 = new Dwarf("Thorin", 100, 100);
+        Dwarf enano1 = new Dwarf("Gimli", 100);
+        Dwarf enano2 = new Dwarf("Thorin", 100);
         Item martilloDeGuerra = new Item("Martillo de Guerra", 15, 5);
         Item armaduraValiriana = new Item("Armadura Valiriana", 0, 20);
 
