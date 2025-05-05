@@ -15,7 +15,7 @@ public class Wizard
         get { return name; }
         set { name = value; }
     }
-    
+        
     public int Health
     {
         get { return health; }
@@ -28,6 +28,7 @@ public class Wizard
         set { initialHealth = value; }
     }
     
+    // Constructor que inicializa nombre, vida y libro de hechizos
     public Wizard(string name, int health, SpellBook spellBook)
     {
         this.name = name;
@@ -36,6 +37,7 @@ public class Wizard
         this.spellBook = spellBook; 
     }
     
+    //// Metodo para agregar un item al mago
     public void AddItem(Item item)
     {
         if (item != null)
@@ -48,6 +50,7 @@ public class Wizard
         }
     }
     
+    // Metodo para remover un item del mago
     public void RemoveItem(Item item)
     {
         if (item != null)
@@ -60,6 +63,7 @@ public class Wizard
         }
     }
     
+    // Calcula el daño total sumando el ataque de todos los items
     public int TotalDamage()
     {
         int totalDamage = 0;
@@ -70,6 +74,7 @@ public class Wizard
         return totalDamage;
     }
     
+    // Calcula la defensa total sumando la defensa de todos los ítems
     public int TotalDefense()
     {
         int totalDefense = 0;
@@ -80,6 +85,7 @@ public class Wizard
         return totalDefense;
     }
     
+    //Metodo para atacar a otro personaje x
     public void Attack(object target)
     {
         if (this.health > 0)
@@ -112,6 +118,7 @@ public class Wizard
         }
     }
     
+    //Metodo para lanzar un hechizo a otro personaje x
     public void CastSpell(object target, Spell spell)
     {
         if (this.spellBook.ContainsSpell(spell))
@@ -144,6 +151,7 @@ public class Wizard
         }
     }
     
+    // Recibe daño y reduce la salud
     public void ReceiveDamage(int damage)
     {
         this.health -= damage;
@@ -154,11 +162,13 @@ public class Wizard
         Console.WriteLine($"{this.name} receives {damage} damage. Remaining health: {this.health}");
     }
 
+    // Devuelve un string con la salud del mago
     public string GetInfo()
     {
         return $"{this.name} - Health: {this.health}/{this.initialHealth}";
     }
     
+    // Devuelve la lista de items con sus valores de ataque y defensa
     public string GetItemsInfo()
     {
         string info = "Items:\n";
@@ -169,6 +179,7 @@ public class Wizard
         return info;
     }
     
+    // Restaura la salud del mago a su valor inicial
     public void Heal()
     {
         this.health = this.initialHealth;
