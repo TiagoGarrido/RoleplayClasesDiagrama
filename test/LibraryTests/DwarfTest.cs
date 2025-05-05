@@ -6,10 +6,10 @@ namespace LibraryTests;
 public class DwarfTest
 {
     [Test]
-    public void Test1()//Dwarfs 
+    public void Test1()//Dwarfs                             
 
     {
-        Dwarf enano = new Dwarf("Nicolas", 100 );
+        Dwarf enano = new Dwarf("Nicolas", 100 );           
         
         Assert.That(enano.GetInfo(), Does.Contain("Nombre: Nicolas"));
         Assert.That(enano.GetInfo(), Does.Contain("Vida: 100"));
@@ -29,7 +29,7 @@ public class DwarfTest
     [Test]
     public void Test3() //Attack
     {
-        Dwarf enano1 = new Dwarf("Nicolas", 100 );
+        Dwarf enano1 = new Dwarf("Nicolas", 100 );          
         Dwarf enano2 = new Dwarf("Lionel", 100 );
 
         Item espada = new Item("Espada", 15, 0);
@@ -84,8 +84,3 @@ public class DwarfTest
         Assert.That(enano1.TotalDefense(), Is.EqualTo(10));
     }
 }
-
-
-
-
-

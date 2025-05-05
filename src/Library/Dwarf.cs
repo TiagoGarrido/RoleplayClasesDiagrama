@@ -3,10 +3,10 @@ using System.Collections;
 using System.Text;
 using Library;
 
-public class Dwarf
+public class Dwarf                              
 {
-    private string name;
-    private int life;
+    private string name;                        
+    private int life;                        
     private int initialLife;
     private ArrayList items = new ArrayList();
 
