@@ -32,7 +32,7 @@ public class DwarfTest
         Dwarf enano1 = new Dwarf("Nicolas", 100 );
         Dwarf enano2 = new Dwarf("Lionel", 100 );
 
-        Item espada = new Item("Espada", 15, 0);
+        Item espada = new Item("Espada", 20, 0);
         
         enano1.AddItem(espada);
         enano1.Attack(enano2);
