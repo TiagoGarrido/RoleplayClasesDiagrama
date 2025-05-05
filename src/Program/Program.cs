@@ -41,9 +41,25 @@ class Program
         elfo1.AddItem(tunicaElfica);
 
         // Realizar acciones
-        mago1.Attack(mago2); 
-        mago1.CastSpell(mago2, bolaDeFuego); 
-        enano1.Attack(enano2); 
+        Console.WriteLine("=== Acciones de combate ===");
+        mago1.Attack(mago2);
+        Console.WriteLine(mago2.GetInfo());
+
+        mago1.CastSpell(mago2, bolaDeFuego);
+        Console.WriteLine(mago2.GetInfo());
+
+        enano1.Attack(enano2);
+        Console.WriteLine(enano2.GetInfo());
+
         elfo1.Attack(mago2);
+        Console.WriteLine(mago2.GetInfo());
+
+        // Mostrar información final de los personajes
+        Console.WriteLine(enano1.GetInfo());
+        Console.WriteLine(enano2.GetInfo());
+        Console.WriteLine(mago1.GetInfo());
+        Console.WriteLine(mago2.GetInfo());
+        Console.WriteLine(elfo1.GetInfo());
+        Console.WriteLine(elfo2.GetInfo());
     }
 }

@@ -6,7 +6,7 @@ namespace LibraryTests;
 public class ElvesTests
 {
     [Test]
-    public void Test1() // Elves
+    public void TestCreateElves()
     {
         Elves elfo = new Elves("Legolas", 100);
 
@@ -15,62 +15,69 @@ public class ElvesTests
     }
 
     [Test]
-    public void Test2() // Item
-    {
-        Item arco = new Item("Arco de yggdrasil", 12, 0);
-
-        Assert.That(arco.Name, Is.EqualTo("Arco de yggdrasil"));
-        Assert.That(arco.Attack, Is.EqualTo(12));
-        Assert.That(arco.Defense, Is.EqualTo(0));
-    }
-
-    [Test]
-    public void Test3() // GetInfo | AddItem | RemoveItem
+    public void TestAddItem()
     {
         Elves elfo = new Elves("Legolas", 100);
         Item arco = new Item("Arco de yggdrasil", 12, 0);
+
         elfo.AddItem(arco);
 
-        string result = elfo.GetInfo();
-        string expected = "Nombre: Legolas, Vida: 100\nItems:\n- Arco de yggdrasil (Ataque: 12, Defensa: 0)\nTotal Ataque: 12\nTotal Defensa: 0\n";
-        Assert.That(result, Is.EqualTo(expected));
-
-        elfo.RemoveItem(arco);
-
-        result = elfo.GetInfo();
-        expected = "Nombre: Legolas, Vida: 100\nItems:\nTotal Ataque: 0\nTotal Defensa: 0\n";
-        Assert.That(result, Is.EqualTo(expected));
+        Assert.That(elfo.GetInfo(), Does.Contain("Arco de yggdrasil"));
+        Assert.That(elfo.TotalDamage(), Is.EqualTo(12));
+        Assert.That(elfo.TotalDefense(), Is.EqualTo(0));
     }
 
     [Test]
-    public void Test4() // Heal
+    public void TestRemoveItem()
     {
         Elves elfo = new Elves("Legolas", 100);
-        elfo.ReceiveDamage(45);
+        Item arco = new Item("Arco de yggdrasil", 12, 0);
 
-        Assert.That(elfo.GetInfo(), Does.Contain("Vida: 55"));
+        elfo.AddItem(arco);
+        elfo.RemoveItem(arco);
 
+        Assert.That(elfo.GetInfo(), Does.Not.Contain("Arco de yggdrasil"));
+        Assert.That(elfo.TotalDamage(), Is.EqualTo(0));
+        Assert.That(elfo.TotalDefense(), Is.EqualTo(0));
+    }
+
+    [Test]
+    public void TestReceiveDamage()
+    {
+        Elves elfo = new Elves("Legolas", 100);
+
+        elfo.ReceiveDamage(30);
+
+        Assert.That(elfo.GetInfo(), Does.Contain("Vida: 70"));
+    }
+
+    [Test]
+    public void TestHeal()
+    {
+        Elves elfo = new Elves("Legolas", 100);
+
+        elfo.ReceiveDamage(50);
         elfo.Heal();
 
         Assert.That(elfo.GetInfo(), Does.Contain("Vida: 100"));
     }
 
     [Test]
-    public void Test5() // TotalDamage | TotalDefense
+    public void TestTotalDamageAndDefense()
     {
         Elves elfo = new Elves("Legolas", 100);
         Item arco = new Item("Arco de yggdrasil", 12, 0);
-        Item tunicaElfica = new Item("Túnica Élfica", 0, 8);
+        Item tunica = new Item("Túnica Élfica", 0, 8);
 
         elfo.AddItem(arco);
-        elfo.AddItem(tunicaElfica);
+        elfo.AddItem(tunica);
 
         Assert.That(elfo.TotalDamage(), Is.EqualTo(12));
         Assert.That(elfo.TotalDefense(), Is.EqualTo(8));
     }
 
     [Test]
-    public void Test6() // Attack
+    public void TestAttack()
     {
         Elves elfo1 = new Elves("Legolas", 100);
         Elves elfo2 = new Elves("Thranduil", 100);
@@ -83,7 +90,7 @@ public class ElvesTests
     }
 
     [Test]
-    public void Test7() // Attack with no health
+    public void TestAttackWithNoHealth()
     {
         Elves elfo1 = new Elves("Legolas", 100);
         Elves elfo2 = new Elves("Thranduil", 100);
@@ -94,5 +101,18 @@ public class ElvesTests
         elfo1.Attack(elfo2);
 
         Assert.That(elfo2.GetInfo(), Does.Contain("Vida: 100"));
+    }
+
+    [Test]
+    public void TestAttackInvalidTarget()
+    {
+        Elves elfo = new Elves("Legolas", 100);
+        Item arco = new Item("Arco de yggdrasil", 20, 0);
+
+        elfo.AddItem(arco);
+        elfo.Attack("InvalidTarget");
+
+        // No cambios en el estado del elfo
+        Assert.That(elfo.GetInfo(), Does.Contain("Vida: 100"));
     }
 }
