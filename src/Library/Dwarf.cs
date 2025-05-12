@@ -1,38 +1,19 @@
 ﻿using System;
 using System.Collections;
-using System.Text;
 using Library;
 
-public class Dwarf
+public class Dwarf : Icharacter
 {
-    private string name;
-    private int life;
-    private int initialLife;
+    public string Name { get; set; }
+    public int health { get; set; }
+    public int initialHealth { get; set; }
     private ArrayList items = new ArrayList();
 
-    public string Name
+    public Dwarf(string name, int health)
     {
-        get { return name; }
-        set { name = value; }
-    }
-
-    public int Life
-    {
-        get { return life; }
-        set { life = value; }
-    }
-
-    public int InitialLife
-    {
-        get { return initialLife; }
-        set { initialLife = value; }
-    }
-
-    public Dwarf(string name, int life)
-    {
-        this.name = name;
-        this.life = life;
-        this.initialLife = life;
+        this.Name = name;
+        this.health = health;
+        this.initialHealth = health;
     }
 
     public void AddItem(Item item)
@@ -76,61 +57,42 @@ public class Dwarf
         {
             totalDefense += item.Defense;
         }
-
         return totalDefense;
     }
 
-    public void Attack(object target)
+    public void Attack(Icharacter target)
     {
-        if (this.life > 0) // Verifica si el enano tiene vida
+        if (this.health > 0)
         {
-            int damage = this.TotalDamage(); // Calcula el daño total
-
-            if (target is Dwarf dwarf) // Si el objetivo es otro enano
-            {
-                dwarf.ReceiveDamage(damage);
-                Console.WriteLine($"{this.name} ataca al enano {dwarf.Name} y causa {damage} de daño.");
-            }
-            else if (target is Wizard wizard) // Si el objetivo es un mago
-            {
-                wizard.ReceiveDamage(damage);
-                Console.WriteLine($"{this.name} ataca al mago {wizard.Name} y causa {damage} de daño.");
-            }
-            else if (target is Elves elf) // Si el objetivo es un elfo
-            {
-                elf.ReceiveDamage(damage);
-                Console.WriteLine($"{this.name} ataca al elfo {elf.Name} y causa {damage} de daño.");
-            }
-            else
-            {
-                Console.WriteLine($"{this.name} no puede atacar al objetivo especificado."); // Objetivo inválido
-            }
+            int damage = this.TotalDamage();
+            target.ReceiveDamage(damage);
+            Console.WriteLine($"{this.Name} ataca a {target.Name} y causa {damage} de daño.");
         }
         else
         {
-            Console.WriteLine($"No puedes atacar porque {this.name} no tiene vida."); // El enano no tiene vida
+            Console.WriteLine($"No puedes atacar porque {this.Name} no tiene vida.");
         }
     }
 
     public void ReceiveDamage(int damage)
     {
-        this.life -= damage;
-        if (this.life < 0)
+        this.health -= damage;
+        if (this.health < 0)
         {
-            this.life = 0; // Asegura que la vida no sea negativa
+            this.health = 0;
         }
-        Console.WriteLine($"{this.name} recibe {damage} de daño. Vida restante: {this.life}");
+        Console.WriteLine($"{this.Name} recibe {damage} de daño. Vida restante: {this.health}");
     }
 
     public void Heal()
     {
-        this.life = initialLife;
-        Console.WriteLine($"{this.name} fue curado, su vida ahora es: {this.life}");
+        this.health = initialHealth;
+        Console.WriteLine($"{this.Name} fue curado, su vida ahora es: {this.health}");
     }
 
     public string GetInfo()
     {
-        string info = $"Nombre: {this.name}, Vida: {this.life}\nItems:\n";
+        string info = $"Nombre: {this.Name}, Vida: {this.health}/{this.initialHealth}\nItems:\n";
         foreach (Item item in this.items)
         {
             info += $"- {item.Name} (Ataque: {item.Attack}, Defensa: {item.Defense})\n";
