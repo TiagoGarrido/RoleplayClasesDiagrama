@@ -15,7 +15,7 @@ public class Elves : Icharacter
         this.initialHealth = health;
     }
 
-    public void AddItem(Item item)
+    public void AddItem(IItem item)
     {
         if (item != null)
         {
@@ -27,7 +27,7 @@ public class Elves : Icharacter
         }
     }
 
-    public void RemoveItem(Item item)
+    public void RemoveItem(IItem item)
     {
         if (item != null)
         {
@@ -42,7 +42,7 @@ public class Elves : Icharacter
     public int TotalDamage()
     {
         int totalatk = 0;
-        foreach (Item item in this.items)
+        foreach (IItem item in this.items)
         {
             totalatk += item.Attack;
         }
@@ -52,7 +52,7 @@ public class Elves : Icharacter
     public int TotalDefense()
     {
         int totaldef = 0;
-        foreach (Item item in this.items)
+        foreach (IItem item in this.items)
         {
             totaldef += item.Defense;
         }
@@ -75,7 +75,7 @@ public class Elves : Icharacter
     public string GetInfo()
     {
         string info = $"Nombre: {this.Name}, Vida: {this.health}/{this.initialHealth}\nItems:\n";
-        foreach (Item item in this.items)
+        foreach (IItem item in this.items)
         {
             info += $"- {item.Name} (Ataque: {item.Attack}, Defensa: {item.Defense})\n";
         }
