@@ -1,14 +1,14 @@
 namespace Library;
 
-public class Capa : ImagicItem
+public class Armadura : IItem
 {
-    public Capa(string name, int defense)
+    
+    public Armadura(string name, int defense)
     {
         Name = name;
         Attack = 0;
         Defense = defense; 
     }
-    
 
     public string Name { get; set; }
     public int Attack { get; set; }

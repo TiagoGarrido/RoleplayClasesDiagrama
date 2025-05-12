@@ -2,7 +2,7 @@ using System.Collections;
 
 namespace Library;
 
-public class SpellBook : ImagicItem
+public class SpellBook : ISpellbook
 {
     private ArrayList spells = new ArrayList();
     public string Name { get; set; }

@@ -16,7 +16,7 @@ public class Dwarf : Icharacter
         this.initialHealth = health;
     }
 
-    public void AddItem(Item item)
+    public void AddItem(IItem item)
     {
         if (item != null)
         {
@@ -28,7 +28,7 @@ public class Dwarf : Icharacter
         }
     }
 
-    public void RemoveItem(Item item)
+    public void RemoveItem(IItem item)
     {
         if (item != null)
         {
@@ -43,7 +43,7 @@ public class Dwarf : Icharacter
     public int TotalDamage()
     {
         int totalattack = 0;
-        foreach (Item item in this.items)
+        foreach (IItem item in this.items)
         {
             totalattack += item.Attack;
         }
@@ -53,7 +53,7 @@ public class Dwarf : Icharacter
     public int TotalDefense()
     {
         int totalDefense = 0;
-        foreach (Item item in this.items)
+        foreach (IItem item in this.items)
         {
             totalDefense += item.Defense;
         }
@@ -93,7 +93,7 @@ public class Dwarf : Icharacter
     public string GetInfo()
     {
         string info = $"Nombre: {this.Name}, Vida: {this.health}/{this.initialHealth}\nItems:\n";
-        foreach (Item item in this.items)
+        foreach (IItem item in this.items)
         {
             info += $"- {item.Name} (Ataque: {item.Attack}, Defensa: {item.Defense})\n";
         }

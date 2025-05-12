@@ -2,15 +2,15 @@ using System.Collections;
 
 namespace Library;
 
-public class Wizard : Icharacter
+public class Wizard : Imagicalcharacter
 {
     public string Name { get; set; }
     public int health { get; set; }
     public int initialHealth { get; set; }
     private ArrayList items = new ArrayList();
-    private SpellBook spellBook;
+    private ISpellbook spellBook;
 
-    public Wizard(string name, int health, SpellBook spellBook)
+    public Wizard(string name, int health, ISpellbook spellBook)
     {
         this.Name = name;
         this.health = health;
@@ -18,7 +18,30 @@ public class Wizard : Icharacter
         this.spellBook = spellBook;
     }
 
-    public void AddItem(Item item)
+    public void AddItem(IItem item)
+    {
+        if (item != null)
+        {
+            this.items.Add(item);
+        }
+        else
+        {
+            Console.WriteLine("No item agregado");
+        }
+    }
+
+    public void RemoveItem(IItem item)
+    {
+        if (item != null)
+        {
+            this.items.Remove(item);
+        }
+        else
+        {
+            Console.WriteLine("No item removido");
+        }
+    }
+    public void AddMagicalItem(ImagicItem item)
     {
         if (item != null)
         {
@@ -30,7 +53,8 @@ public class Wizard : Icharacter
         }
     }
 
-    public void RemoveItem(Item item)
+    
+    public void RemoveMagicalItem(ImagicItem item)
     {
         if (item != null)
         {
@@ -45,7 +69,7 @@ public class Wizard : Icharacter
     public int TotalDamage()
     {
         int totalDamage = 0;
-        foreach (Item item in this.items)
+        foreach (ImagicItem item in this.items)
         {
             totalDamage += item.GetAttackValue();
         }
@@ -55,7 +79,7 @@ public class Wizard : Icharacter
     public int TotalDefense()
     {
         int totalDefense = 0;
-        foreach (Item item in this.items)
+        foreach (ImagicItem item in this.items)
         {
             totalDefense += item.GetDefenseValue();
         }
@@ -89,7 +113,8 @@ public class Wizard : Icharacter
             Console.WriteLine($"{this.Name} no conoce el hechizo {spell.Name}.");
         }
     }
-
+    
+    
     public void ReceiveDamage(int damage)
     {
         this.health -= damage;
@@ -109,7 +134,7 @@ public class Wizard : Icharacter
     public string GetInfo()
     {
         string info = $"{this.Name} - Vida: {this.health}/{this.initialHealth}\nItems:\n";
-        foreach (Item item in this.items)
+        foreach (ImagicItem item in this.items)
         {
             info += $"- {item.Name} (Ataque: {item.GetAttackValue()}, Defensa: {item.GetDefenseValue()})\n";
         }
