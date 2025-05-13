@@ -5,61 +5,62 @@ class Program
 {
     static void Main(string[] args)
     {
-        // Crear un enano
-        Dwarf enano1 = new Dwarf("Gimli", 100);
-        Dwarf enano2 = new Dwarf("Thorin", 100);
-        Item martilloDeGuerra = new Item("Martillo de Guerra", 15, 5);
-        Item armaduraValiriana = new Item("Armadura Valiriana", 0, 20);
+        Console.WriteLine("Bienvenido a la aventura de rol!");
 
-        enano1.AddItem(martilloDeGuerra);
-        enano1.AddItem(armaduraValiriana);
+        // Crear personajes y objetos
+        Icharacter enano = new Dwarf("Gimli", 100);
+        IItem martilloDeGuerra = new Martillo("Martillo de Guerra", 15,32); // Cambiar a la clase correcta
+        IItem armaduraValiriana = new Armadura("Armadura Valiriana", 20);
 
-        // Crear un SpellBook y hechizos
-        SpellBook SangreDracarica = new SpellBook();
+        enano.AddItem(martilloDeGuerra);
+        enano.AddItem(armaduraValiriana);
+        ISpellbook SangreDracarica = new SpellBook("Sangre Dracárica");
         Spell bolaDeFuego = new Spell("Bola de Fuego", 20);
         Spell llamarada = new Spell("Llamarada", 15);
 
         SangreDracarica.AddSpell(bolaDeFuego);
         SangreDracarica.AddSpell(llamarada);
 
-        // Crear magos
-        Wizard mago1 = new Wizard("Gandalf", 100, SangreDracarica);
-        Wizard mago2 = new Wizard("Sauron", 100, SangreDracarica);
-        Item baston = new Item("Bastón Mágico", 10, 0);
-        Item capa = new Item("Capa Mágica", 0, 10);
+        Imagicalcharacter mago = new Wizard("Gandalf", 100, SangreDracarica);
+        ImagicItem baston = new Baston("Bastón Mágico", 10);
+        ImagicItem capa = new Capa("Capa Mágica", 10);
 
-        mago1.AddItem(baston);
-        mago1.AddItem(capa);
+        mago.AddMagicalItem(baston);
+        mago.AddMagicalItem(capa);
 
-        // Crear elfos
-        Elves elfo1 = new Elves("Legolas", 100);
-        Elves elfo2 = new Elves("Thranduil", 100);
-        Item arco = new Item("Arco de yggdrasil", 12, 0);
-        Item tunicaElfica = new Item("Túnica Élfica", 0, 8);
+        ISpellbook CorazonHelado = new SpellBook("Corazón Helado");
+        Spell Nevada = new Spell("Tormenta de Nieve", 20);
+        Spell picosH = new Spell("Picos Helados", 15);
 
-        elfo1.AddItem(arco);
-        elfo1.AddItem(tunicaElfica);
+        CorazonHelado.AddSpell(Nevada);
+        CorazonHelado.AddSpell(picosH);
 
-        // Realizar acciones
-        Console.WriteLine("=== Acciones de combate ===");
-        mago1.Attack(mago2);
-        Console.WriteLine(mago2.GetInfo());
+        Imagicalcharacter mago1 = new Wizard("Sauron", 100, CorazonHelado);
+        ImagicItem bastonGigante = new Baston("Bastón de Hielo", 10);
+        ImagicItem capain = new Capa("Capa de Sigilo", 0);
 
-        mago1.CastSpell(mago2, bolaDeFuego);
-        Console.WriteLine(mago2.GetInfo());
+        mago1.AddMagicalItem(bastonGigante);
+        mago1.AddMagicalItem(capain);
 
-        enano1.Attack(enano2);
-        Console.WriteLine(enano2.GetInfo());
+        Icharacter elfo= new Elves("Legolas", 100);
+        IItem arco = new Arco("Arco de yggdrasil", 12);
+        IItem tunicaElfica = new Armadura("Túnica Élfica", 8);
 
-        elfo1.Attack(mago2);
-        Console.WriteLine(mago2.GetInfo());
+        elfo.AddItem(arco);
+        elfo.AddItem(tunicaElfica);
 
-        // Mostrar informacion final de los personajes
-        Console.WriteLine(enano1.GetInfo());
-        Console.WriteLine(enano2.GetInfo());
+        // Simulación de combate
+        mago.Attack(enano);
+        mago.CastSpell(enano, bolaDeFuego);
+        mago1.CastSpell(mago, Nevada);
+        enano.Attack(elfo);
+        elfo.Attack(mago1);
+        enano.Heal();
+
+        // Mostrar información final
+        Console.WriteLine(enano.GetInfo());
+        Console.WriteLine(mago.GetInfo());
         Console.WriteLine(mago1.GetInfo());
-        Console.WriteLine(mago2.GetInfo());
-        Console.WriteLine(elfo1.GetInfo());
-        Console.WriteLine(elfo2.GetInfo());
+        Console.WriteLine(elfo.GetInfo());
     }
 }

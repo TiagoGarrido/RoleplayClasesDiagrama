@@ -1,142 +1,105 @@
 ﻿using System;
 using System.Collections;
-using System.Text;
 using Library;
 
-public class Dwarf                              
+public class Dwarf : Icharacter
 {
-    private string name;                            //Nombre Dwarf             
-    private int health;                             //Vida del Dwarf
-    private int initialHealth;                      //Vida inicial del Dwarf
-    private ArrayList items = new ArrayList();      //Lista de items
+    public string Name { get; set; }
+    public int health { get; set; }
+    public int initialHealth { get; set; }
+    private ArrayList items = new ArrayList();
 
-    public string Name                              //Accedo al nombre
+    public Dwarf(string name, int health)
     {
-        get { return name; }                        //Devuelve el nombre
-        set { name = value; }                       //Modifica el nombre
+        this.Name = name;
+        this.health = health;
+        this.initialHealth = health;
     }
 
-    public int Health                               //Accedo a health
-    {
-        get { return health; }                      //Devuelve health
-        set { health = value; }                     //Modifica health
-    }
-
-    public int Initialhealth                        //Accedo a initial health
-    {
-        get { return initialHealth; }               //Devuelve initialhealth
-        set { initialHealth = value; }              //Modifica initialHealth
-    }
-
-    public Dwarf(string name, int health)             //Constructor que recibe name y health
-    {
-        this.name = name;                               //asigna el nombre
-        this.health = health;                           //asigna la vida
-        this.initialHealth = health;                    //guarda la vida actual
-    }
-
-    public void AddItem(Item item)                      //Agrega un item
-    {
-        if (item != null)                                  
-        {
-            this.items.Add(item);                      //Si el item no es nulo, lo agrega a la lista 
-        }
-        else
-        {
-            Console.WriteLine("No item agregado");      //Si es nulo, muestra mensaje
-        }
-    }
-
-    public void RemoveItem(Item item)                   //Elimina un item de la lista
+    public void AddItem(IItem item)
     {
         if (item != null)
         {
-            this.items.Remove(item);                       //Si no es nulo, lo elimina
+            this.items.Add(item);
         }
         else
         {
-            Console.WriteLine("No item removido");          //Si es nulo, muestra mensaje
+            Console.WriteLine("No item agregado");
         }
     }
 
-    public int TotalDamage()                //Metodo para calcular el daño total
+    public void RemoveItem(IItem item)
+    {
+        if (item != null)
+        {
+            this.items.Remove(item);
+        }
+        else
+        {
+            Console.WriteLine("No item removido");
+        }
+    }
+
+    public int TotalDamage()
     {
         int totalattack = 0;
-        foreach (Item item in this.items)
+        foreach (IItem item in this.items)
         {
             totalattack += item.Attack;
         }
         return totalattack;
     }
 
-    public int TotalDefense()           //Metodo para calcular la defensa del enano
+    public int TotalDefense()
     {
         int totalDefense = 0;
-        foreach (Item item in this.items)
+        foreach (IItem item in this.items)
         {
-            totalDefense += item.Defense;       //Suma la defensa de cada item
+            totalDefense += item.Defense;
         }
 
         return totalDefense;
     }
 
-    public void Attack(object target)       //Metodo para que el enano ataque
+    public void Attack(Icharacter target)
     {
-        if (this.health > 0) // Verifica si el enano tiene vida
+        if (this.health > 0)
         {
-            int damage = this.TotalDamage(); // Calcula el daño total
-
-            if (target is Dwarf dwarf) // Si el objetivo es otro enano
-            {
-                dwarf.ReceiveDamage(damage);
-                Console.WriteLine($"{this.name} ataca al enano {dwarf.Name} y causa {damage} de daño.");
-            }
-            else if (target is Wizard wizard) // Si el objetivo es un mago
-            {
-                wizard.ReceiveDamage(damage);
-                Console.WriteLine($"{this.name} ataca al mago {wizard.Name} y causa {damage} de daño.");
-            }
-            else if (target is Elves elf) // Si el objetivo es un elfo
-            {
-                elf.ReceiveDamage(damage);
-                Console.WriteLine($"{this.name} ataca al elfo {elf.Name} y causa {damage} de daño.");
-            }
-            else
-            {
-                Console.WriteLine($"{this.name} no puede atacar al objetivo especificado."); // Objetivo inválido
-            }
+            int damage = this.TotalDamage();
+            target.ReceiveDamage(damage);
+            Console.WriteLine($"{this.Name} ataca a {target.Name} y causa {damage} de daño.");
         }
         else
         {
-            Console.WriteLine($"No puedes atacar porque {this.name} no tiene vida."); // El enano no tiene vida
+            Console.WriteLine($"No puedes atacar porque {this.Name} no tiene vida.");
         }
     }
 
-    public void ReceiveDamage(int damage)       //Metodo que resta vida al enano cuando recibe daño
+    public void ReceiveDamage(int damage)
     {
         this.health -= damage;
         if (this.health < 0)
         {
-            this.health = 0; // Asegura que la vida no sea negativa
+            this.health = 0;
         }
-        Console.WriteLine($"{this.name} recibe {damage} de daño. Vida restante: {this.health}");
+        Console.WriteLine($"{this.Name} recibe {damage} de daño. Vida restante: {this.health}");
     }
 
-    public void Heal()          //Restaura la vida del enano a la vida inicial
+    public void Heal()
     {
         this.health = initialHealth;
-        Console.WriteLine($"{this.name} fue curado, su vida ahora es: {this.health}");
+        Console.WriteLine($"{this.Name} fue curado, su vida ahora es: {this.health}");
     }
 
-    public string GetInfo()    //Metodo para obtener informacion de enano             
+    public string GetInfo()
     {
-        string info = $"Nombre: {this.name}, Vida: {this.health}\nItems:\n";
-        foreach (Item item in this.items)                                       
+        string info = $"Nombre: {this.Name}, Vida: {this.health}/{this.initialHealth}\nItems:\n";
+        foreach (IItem item in this.items)
         {
-            info += $"- {item.Name} (Ataque: {item.Attack}, Defensa: {item.Defense})\n";    //Lista todos los items
+            info += $"- {item.Name} (Ataque: {item.Attack}, Defensa: {item.Defense})\n";
         }
-        info += $"Total Ataque: {this.TotalDamage()}\n";        //Muestra el ataque
-        info += $"Total Defensa: {this.TotalDefense()}\n";      //Muestra defensa
+        info += $"Total Ataque: {this.TotalDamage()}\n";
+        info += $"Total Defensa: {this.TotalDefense()}\n";
         return info;
     }
 }
