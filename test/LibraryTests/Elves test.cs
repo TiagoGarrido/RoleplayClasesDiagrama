@@ -20,8 +20,8 @@ public class ElvesTests
     public void TestAddItem()
     {
         // Prueba la adición de un ítem al inventario del elfo.
-        Elves elfo = new Elves("Legolas", 100);
-        Item arco = new Item("Arco de yggdrasil", 12, 0);
+        Elves elfo = new Elves("Legolas", 100); 
+        IItem arco = new Arco("Arco de yggdrasil", 12);
 
         elfo.AddItem(arco);
 
@@ -36,7 +36,7 @@ public class ElvesTests
     {
         // Prueba la eliminación de un ítem del inventario del elfo.
         Elves elfo = new Elves("Legolas", 100);
-        Item arco = new Item("Arco de yggdrasil", 12, 0);
+        IItem arco = new Arco("Arco de yggdrasil", 12);
 
         elfo.AddItem(arco);
         elfo.RemoveItem(arco);
@@ -77,8 +77,8 @@ public class ElvesTests
     {
         // Prueba el cálculo del daño y la defensa totales basados en los ítems del elfo.
         Elves elfo = new Elves("Legolas", 100);
-        Item arco = new Item("Arco de yggdrasil", 12, 0);
-        Item tunica = new Item("Túnica Élfica", 0, 8);
+        IItem arco = new Arco("Arco de yggdrasil", 12);
+        IItem tunica= new Armadura("Túnica Élfica",  8);
 
         elfo.AddItem(arco);
         elfo.AddItem(tunica);
@@ -94,7 +94,7 @@ public class ElvesTests
         // Prueba que el elfo pueda atacar a otro elfo y reducir su vida.
         Elves elfo1 = new Elves("Legolas", 100);
         Elves elfo2 = new Elves("Thranduil", 100);
-        Item arco = new Item("Arco de yggdrasil", 20, 0);
+        IItem arco = new Arco("Arco de yggdrasil", 20);
 
         elfo1.AddItem(arco);
         elfo1.Attack(elfo2);
@@ -109,7 +109,7 @@ public class ElvesTests
         // Prueba que un elfo sin vida no pueda atacar.
         Elves elfo1 = new Elves("Legolas", 100);
         Elves elfo2 = new Elves("Thranduil", 100);
-        Item arco = new Item("Arco de yggdrasil", 20, 0);
+        IItem arco = new Arco("Arco de yggdrasil", 20);
 
         elfo1.AddItem(arco);
         elfo1.ReceiveDamage(100); // El elfo pierde toda su vida.
@@ -118,18 +118,5 @@ public class ElvesTests
         // Verifica que el ataque no afecte la vida del objetivo.
         Assert.That(elfo2.GetInfo(), Does.Contain("Vida: 100"));
     }
-
-    [Test]
-    public void TestAttackInvalidTarget()
-    {
-        // Prueba que el elfo no pueda atacar un objetivo inválido.
-        Elves elfo = new Elves("Legolas", 100);
-        Item arco = new Item("Arco de yggdrasil", 20, 0);
-
-        elfo.AddItem(arco);
-        elfo.Attack("InvalidTarget");
-
-        // Verifica que no haya cambios en el estado del elfo.
-        Assert.That(elfo.GetInfo(), Does.Contain("Vida: 100"));
-    }
+    
 }

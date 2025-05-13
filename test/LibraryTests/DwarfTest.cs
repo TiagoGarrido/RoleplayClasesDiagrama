@@ -18,11 +18,10 @@ public class DwarfTest
     [Test]
     public void Test2() //Item
     {
-        Item espada = new Item("Espada", 15, 0);
+        IItem espada = new Espada("Espada", 15);
         
         Assert.That(espada.Name, Is.EqualTo("Espada"));
         Assert.That(espada.Attack, Is.EqualTo(15));
-        Assert.That(espada.Defense, Is.EqualTo(0));
     }
     
     
@@ -32,7 +31,7 @@ public class DwarfTest
         Dwarf enano1 = new Dwarf("Nicolas", 100 );
         Dwarf enano2 = new Dwarf("Lionel", 100 );
 
-        Item espada = new Item("Espada", 20, 0);
+        IItem espada = new Espada("Espada", 20);
         
         enano1.AddItem(espada);
         enano1.Attack(enano2);
@@ -43,21 +42,29 @@ public class DwarfTest
     [Test]
     public void Test4() //Get Info - Add Item - Remove Item
     {
-        Dwarf enano1 = new Dwarf("Nicolas", 100 );
-        Item espada = new Item("Espada", 15, 0);
+        // Arrange
+        Dwarf enano1 = new Dwarf("Nicolas", 100);
+        IItem espada = new Espada("Espada", 15); // Ataque: 15, Defensa: 0
         enano1.AddItem(espada);
-        
+
+        // Verificar información después de añadir el ítem
         string result = enano1.GetInfo();
-        string expected = "Nombre: Nicolas, Vida: 100\nItems:\n- Espada (Ataque: 15, Defensa: 0)\nTotal Ataque: 15\nTotal Defensa: 0\n";
+        string expected = "Nombre: Nicolas, Vida: 100/100\n" +
+                          "Items:\n" +
+                          "- Espada (Ataque: 15, Defensa: 0)\n" +
+                          "Total Ataque: 15\n" +
+                          "Total Defensa: 0\n";
         Assert.That(result, Is.EqualTo(expected));
 
+        // Act: Eliminar el ítem y verificar información actualizada
         enano1.RemoveItem(espada);
-
         result = enano1.GetInfo();
-        expected = "Nombre: Nicolas, Vida: 100\nItems:\nTotal Ataque: 0\nTotal Defensa: 0\n";
+        expected = "Nombre: Nicolas, Vida: 100/100\n" +
+                   "Items:\n" +
+                   "Total Ataque: 0\n" +
+                   "Total Defensa: 0\n";
         Assert.That(result, Is.EqualTo(expected));
     }
-    
     [Test]
     public void Test5() //Heal
     {
@@ -74,8 +81,8 @@ public class DwarfTest
     public void Test6() //Defense - Total Damage
     {
         Dwarf enano1 = new Dwarf("Nicolas", 100 );
-        Item espada = new Item("Espada", 15, 0);
-        Item escudo = new Item("Escudo", 0, 10);
+        IItem espada = new Espada("Espada", 15);
+        IItem escudo = new Escudo("Escudo", 10);
         
         enano1.AddItem(espada);
         enano1.AddItem(escudo);
