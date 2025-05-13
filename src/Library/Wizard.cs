@@ -69,9 +69,16 @@ public class Wizard : Imagicalcharacter
     public int TotalDamage()
     {
         int totalDamage = 0;
-        foreach (ImagicItem item in this.items)
+        foreach (var item in this.items)
         {
-            totalDamage += item.GetAttackValue();
+            if (item is IItem normalItem)
+            {
+                totalDamage += normalItem.GetAttackValue();
+            }
+            else if (item is ImagicItem magicItem)
+            {
+                totalDamage += magicItem.GetAttackValue();
+            }
         }
         return totalDamage;
     }
@@ -79,9 +86,16 @@ public class Wizard : Imagicalcharacter
     public int TotalDefense()
     {
         int totalDefense = 0;
-        foreach (ImagicItem item in this.items)
+        foreach (var item in this.items)
         {
-            totalDefense += item.GetDefenseValue();
+            if (item is IItem normalItem)
+            {
+                totalDefense += normalItem.GetDefenseValue();
+            }
+            else if (item is ImagicItem magicItem)
+            {
+                totalDefense += magicItem.GetDefenseValue();
+            }
         }
         return totalDefense;
     }
@@ -133,11 +147,24 @@ public class Wizard : Imagicalcharacter
 
     public string GetInfo()
     {
-        string info = $"{this.Name} - Vida: {this.health}/{this.initialHealth}\nItems:\n";
-        foreach (ImagicItem item in this.items)
+        string info = $"Nombre: {this.Name} - Vida: {this.health}/{this.initialHealth}\nItems:\n";
+        foreach (var item in this.items)
         {
-            info += $"- {item.Name} (Ataque: {item.GetAttackValue()}, Defensa: {item.GetDefenseValue()})\n";
+            if (item is ImagicItem magicItem)
+            {
+                info += $"- {magicItem.Name} (Ataque: {magicItem.GetAttackValue()}, Defensa: {magicItem.GetDefenseValue()})\n";
+            }
+            else if (item is IItem normalItem)
+            {
+                info += $"- {normalItem.Name} (Ataque: {normalItem.GetAttackValue()}, Defensa: {normalItem.GetDefenseValue()})\n";
+            }
         }
+
+        if (this.spellBook != null)
+        {
+            info += $"Libro de Hechizos: {this.spellBook.Name}\n";
+        }
+
         return info;
     }
 }

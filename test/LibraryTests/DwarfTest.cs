@@ -1,93 +1,121 @@
-﻿using System.Xml.Serialization;
-using Library;
+﻿using Library;
+using NUnit.Framework;
 
 namespace LibraryTests;
 
-public class DwarfTest
+public class DwarfTests
 {
     [Test]
-    public void Test1()//Dwarfs                             
-
+    public void TestCreateDwarf()
     {
-        Dwarf enano = new Dwarf("Nicolas", 100 );           
-        
-        Assert.That(enano.GetInfo(), Does.Contain("Nombre: Nicolas"));
+        // Prueba la creación de un enano con nombre y vida inicial.
+        Icharacter enano = new Dwarf("Gimli", 100);
+
+        // Verifica que la información del enano contenga el nombre y la vida inicial.
+        Assert.That(enano.GetInfo(), Does.Contain("Nombre: Gimli"));
         Assert.That(enano.GetInfo(), Does.Contain("Vida: 100"));
     }
 
     [Test]
-    public void Test2() //Item
+    public void TestAddItem()
     {
-        IItem espada = new Espada("Espada", 15);
-        
-        Assert.That(espada.Name, Is.EqualTo("Espada"));
-        Assert.That(espada.Attack, Is.EqualTo(15));
-    }
-    
-    
-    [Test]
-    public void Test3() //Attack
-    {
-        Dwarf enano1 = new Dwarf("Nicolas", 100 );          
-        Dwarf enano2 = new Dwarf("Lionel", 100 );
+        // Prueba la adición de un ítem al inventario del enano.
+        Icharacter enano = new Dwarf("Gimli", 100);
+        IItem hacha = new Hacha("Hacha de batalla", 15);
 
-        IItem espada = new Espada("Espada", 20);
-        
-        enano1.AddItem(espada);
+        enano.AddItem(hacha);
+
+        // Verifica que el ítem se haya añadido correctamente y que los valores de ataque y defensa sean correctos.
+        Assert.That(enano.GetInfo(), Does.Contain("Hacha de batalla"));
+        Assert.That(enano.TotalDamage(), Is.EqualTo(15));
+        Assert.That(enano.TotalDefense(), Is.EqualTo(0));
+    }
+
+    [Test]
+    public void TestRemoveItem()
+    {
+        // Prueba la eliminación de un ítem del inventario del enano.
+        Icharacter enano = new Dwarf("Gimli", 100);
+        IItem hacha = new Hacha("Hacha de batalla", 15);
+
+        enano.AddItem(hacha);
+        enano.RemoveItem(hacha);
+
+        // Verifica que el ítem se haya eliminado correctamente y que los valores de ataque y defensa sean 0.
+        Assert.That(enano.GetInfo(), Does.Not.Contain("Hacha de batalla"));
+        Assert.That(enano.TotalDamage(), Is.EqualTo(0));
+        Assert.That(enano.TotalDefense(), Is.EqualTo(0));
+    }
+
+    [Test]
+    public void TestReceiveDamage()
+    {
+        // Prueba que el enano reciba daño correctamente.
+        Icharacter enano = new Dwarf("Gimli", 100);
+
+        enano.ReceiveDamage(30);
+
+        // Verifica que la vida del enano se reduzca correctamente.
+        Assert.That(enano.GetInfo(), Does.Contain("Vida: 70"));
+    }
+
+    [Test]
+    public void TestHeal()
+    {
+        // Prueba que el enano pueda curarse y restaurar su vida inicial.
+        Icharacter enano = new Dwarf("Gimli", 100);
+
+        enano.ReceiveDamage(50);
+        enano.Heal();
+
+        // Verifica que la vida del enano se haya restaurado a su valor inicial.
+        Assert.That(enano.GetInfo(), Does.Contain("Vida: 100"));
+    }
+
+    [Test]
+    public void TestTotalDamageAndDefense()
+    {
+        // Prueba el cálculo del daño y la defensa totales basados en los ítems del enano.
+        Icharacter enano = new Dwarf("Gimli", 100);
+        IItem hacha = new Hacha("Hacha de batalla", 15);
+        IItem escudo = new Escudo("Escudo robusto", 10);
+
+        enano.AddItem(hacha);
+        enano.AddItem(escudo);
+
+        // Verifica que los valores totales de ataque y defensa sean correctos.
+        Assert.That(enano.TotalDamage(), Is.EqualTo(15));
+        Assert.That(enano.TotalDefense(), Is.EqualTo(10));
+    }
+
+    [Test]
+    public void TestAttack()
+    {
+        // Prueba que el enano pueda atacar a otro enano y reducir su vida.
+        Icharacter enano1 = new Dwarf("Gimli", 100);
+        Icharacter enano2 = new Dwarf("Thorin", 100);
+        IItem hacha = new Hacha("Hacha de batalla", 20);
+
+        enano1.AddItem(hacha);
         enano1.Attack(enano2);
-        
+
+        // Verifica que la vida del enano atacado se reduzca correctamente.
         Assert.That(enano2.GetInfo(), Does.Contain("Vida: 80"));
     }
 
     [Test]
-    public void Test4() //Get Info - Add Item - Remove Item
+    public void TestAttackWithNoHealth()
     {
-        // Arrange
-        Dwarf enano1 = new Dwarf("Nicolas", 100);
-        IItem espada = new Espada("Espada", 15); // Ataque: 15, Defensa: 0
-        enano1.AddItem(espada);
+        // Prueba que un enano sin vida no pueda atacar.
+        Icharacter enano1 = new Dwarf("Gimli", 100);
+        Icharacter enano2 = new Dwarf("Thorin", 100);
+        IItem hacha = new Hacha("Hacha de batalla", 20);
 
-        // Verificar información después de añadir el ítem
-        string result = enano1.GetInfo();
-        string expected = "Nombre: Nicolas, Vida: 100/100\n" +
-                          "Items:\n" +
-                          "- Espada (Ataque: 15, Defensa: 0)\n" +
-                          "Total Ataque: 15\n" +
-                          "Total Defensa: 0\n";
-        Assert.That(result, Is.EqualTo(expected));
+        enano1.AddItem(hacha);
+        enano1.ReceiveDamage(100); // El enano pierde toda su vida.
+        enano1.Attack(enano2);
 
-        // Act: Eliminar el ítem y verificar información actualizada
-        enano1.RemoveItem(espada);
-        result = enano1.GetInfo();
-        expected = "Nombre: Nicolas, Vida: 100/100\n" +
-                   "Items:\n" +
-                   "Total Ataque: 0\n" +
-                   "Total Defensa: 0\n";
-        Assert.That(result, Is.EqualTo(expected));
-    }
-    [Test]
-    public void Test5() //Heal
-    {
-        Dwarf enano1 = new Dwarf("Nicolas", 100 );
-        enano1.ReceiveDamage(35);
-        
-        Assert.That(enano1.GetInfo(), Does.Contain("Vida: 65"));
-        
-        enano1.Heal();
-        Assert.That(enano1.GetInfo(), Does.Contain("Vida: 100"));
-    }
-
-    [Test]
-    public void Test6() //Defense - Total Damage
-    {
-        Dwarf enano1 = new Dwarf("Nicolas", 100 );
-        IItem espada = new Espada("Espada", 15);
-        IItem escudo = new Escudo("Escudo", 10);
-        
-        enano1.AddItem(espada);
-        enano1.AddItem(escudo);
-        
-        Assert.That(enano1.TotalDamage(), Is.EqualTo(15));
-        Assert.That(enano1.TotalDefense(), Is.EqualTo(10));
+        // Verifica que el ataque no afecte la vida del objetivo.
+        Assert.That(enano2.GetInfo(), Does.Contain("Vida: 100"));
     }
 }

@@ -6,6 +6,8 @@ public interface Icharacter
     int health { get; set; }
     int initialHealth { get; set; }
     void AddItem(IItem item);
+    int TotalDefense();
+    int TotalDamage();
     void RemoveItem(IItem item);
     void ReceiveDamage(int damage);
     void Heal();
