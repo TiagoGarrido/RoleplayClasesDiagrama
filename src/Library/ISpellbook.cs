@@ -11,6 +11,6 @@ public interface ISpellbook
     int GetDefenseValue();
     bool ContainsSpell(Spell spell);
     string GetSpellsInfo();
-    String RemoveSpell(Spell spell);
-    String AddSpell(Spell spell);
+    string RemoveSpell(Spell spell);
+    string AddSpell(Spell spell);
 }

@@ -7,12 +7,12 @@ public interface ICharacter
     string Name { get; set; }
     int Health { get; set; }
     int InitialHealth { get; set; }
-    String AddItem(IItem item);
+    string AddItem(IItem item);
     int TotalDefense();
     int TotalDamage();
-    String RemoveItem(IItem item);
-    String ReceiveDamage(int damage);
-    String Heal();
+    string RemoveItem(IItem item);
+    string ReceiveDamage(int damage);
+    string Heal();
     string GetInfo();
-    String Attack(ICharacter target); // Nuevo método para atacar
+    string Attack(ICharacter target); // Nuevo método para atacar
 }
