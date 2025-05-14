@@ -3,6 +3,7 @@ namespace Library;
 public class Spell
 {
     private string name;
+    private int attackValue;
     
     public string Name
     {
@@ -10,7 +11,7 @@ public class Spell
         set { name = value; }
     }
     
-    private int attackValue;
+    
     
     public int AttackValue
     {
