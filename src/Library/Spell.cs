@@ -12,7 +12,6 @@ public class Spell
     }
     
     
-    
     public int AttackValue
     {
         get { return attackValue; }
