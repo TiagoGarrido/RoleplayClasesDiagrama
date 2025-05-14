@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices.JavaScript;
+
 namespace Library;
 using System.Collections;
 
@@ -15,28 +17,30 @@ public class Elves : ICharacter
         this.InitialHealth = health;
     }
 
-    public void AddItem(IItem item)
+    public string AddItem(IItem item)
     {
         if (item != null)
         {
             this.items.Add(item);
+            return "Item agregado correctamente.";
         }
         else
         {
-            Console.WriteLine("Ese item no existe");
+            return "Este item no existe.";
         }
     }
 
-    public void RemoveItem(IItem item)
+    public string RemoveItem(IItem item)
     {
         if (item != null)
         {
             this.items.Remove(item);
+            return "Item removido correctamente.";
         }
         else
         {
-            Console.WriteLine("Ese item no existe");
-        }
+            return  "Este item no existe.";
+        } 
     }
 
     public int TotalDamage()
@@ -59,17 +63,17 @@ public class Elves : ICharacter
         return totaldef;
     }
 
-    public void ReceiveDamage(int damage)
+    public string ReceiveDamage(int damage)
     {
         this.Health -= damage;
         if (this.Health < 0) this.Health = 0;
-        Console.WriteLine($"{this.Name} recibe {damage} de daño. Vida restante: {this.Health}");
+        return $"{this.Name} recibe {damage} de daño. Vida restante: {this.Health}";
     }
 
-    public void Heal()
+    public string Heal()
     {
         this.Health = this.InitialHealth;
-        Console.WriteLine($"{this.Name} ha sido curado. Vida restaurada a: {this.Health}");
+        return $"{this.Name} ha sido curado. Vida restaurada a: {this.Health}";
     }
 
     public string GetInfo()
@@ -84,17 +88,17 @@ public class Elves : ICharacter
         return info;
     }
 
-    public void Attack(ICharacter target)
+    public string Attack(ICharacter target)
     {
         if (this.Health > 0)
         {
             int damage = this.TotalDamage();
             target.ReceiveDamage(damage);
-            Console.WriteLine($"{this.Name} ataca a {target.Name} y causa {damage} de daño.");
+            return $"{this.Name} ataca a {target.Name} y causa {damage} de daño.";
         }
         else
         {
-            Console.WriteLine($"No puedes atacar porque {this.Name} no tiene vida.");
+            return $"No puedes atacar porque {this.Name} no tiene vida.";
         }
     }
 }

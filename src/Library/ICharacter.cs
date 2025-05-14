@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices.JavaScript;
+
 namespace Library;
 
 public interface ICharacter
@@ -5,12 +7,12 @@ public interface ICharacter
     string Name { get; set; }
     int Health { get; set; }
     int InitialHealth { get; set; }
-    void AddItem(IItem item);
+    String AddItem(IItem item);
     int TotalDefense();
     int TotalDamage();
-    void RemoveItem(IItem item);
-    void ReceiveDamage(int damage);
-    void Heal();
+    String RemoveItem(IItem item);
+    String ReceiveDamage(int damage);
+    String Heal();
     string GetInfo();
-    void Attack(ICharacter target); // Nuevo método para atacar
+    String Attack(ICharacter target); // Nuevo método para atacar
 }

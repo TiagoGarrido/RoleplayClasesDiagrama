@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices.JavaScript;
+
 namespace Library;
 
 public interface ISpellbook
@@ -9,6 +11,6 @@ public interface ISpellbook
     int GetDefenseValue();
     bool ContainsSpell(Spell spell);
     string GetSpellsInfo();
-    void RemoveSpell(Spell spell);
-    void AddSpell(Spell spell);
+    String RemoveSpell(Spell spell);
+    String AddSpell(Spell spell);
 }

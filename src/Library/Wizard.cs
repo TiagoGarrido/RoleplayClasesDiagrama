@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.InteropServices.JavaScript;
 
 namespace Library;
 
@@ -18,51 +19,56 @@ public class Wizard : IMagicalCharacter
         this.spellBook = spellBook;
     }
 
-    public void AddItem(IItem item)
+    public string AddItem(IItem item)
     {
         if (item != null)
         {
             this.items.Add(item);
+            return "Item agregado correctamente.";
         }
         else
         {
-            Console.WriteLine("No item agregado");
+            return "Este item no existe.";
         }
     }
 
-    public void RemoveItem(IItem item)
+    public string RemoveItem(IItem item)
     {
         if (item != null)
         {
             this.items.Remove(item);
+            return "Item removido correctamente.";
         }
         else
         {
-            Console.WriteLine("No item removido");
-        }
+            return  "Este item no existe.";
+        } 
     }
-    public void AddMagicalItem(IMagicItem item)
+
+    public string AddMagicalItem(IMagicItem item)
     {
         if (item != null)
         {
             this.items.Add(item);
+            return "Item agregado correctamente.";
         }
         else
         {
-            Console.WriteLine("Item does not exist.");
+            return "Este item no existe.";
         }
     }
 
-    
-    public void RemoveMagicalItem(IMagicItem item)
+
+    public string RemoveMagicalItem(IMagicItem item)
     {
         if (item != null)
         {
             this.items.Remove(item);
+            return "Item removido correctamente.";
         }
         else
         {
-            Console.WriteLine("Item does not exist.");
+            return "Este item no existe.";
         }
     }
 
@@ -100,48 +106,45 @@ public class Wizard : IMagicalCharacter
         return totalDefense;
     }
 
-    public void Attack(ICharacter target)
+    public string Attack(ICharacter target)
     {
         if (this.Health > 0)
         {
             int damage = this.TotalDamage();
             target.ReceiveDamage(damage);
-            Console.WriteLine($"{this.Name} ataca a {target.Name} y causa {damage} de daño.");
+            return $"{this.Name} ataca a {target.Name} y causa {damage} de daño.";
         }
         else
         {
-            Console.WriteLine($"No puedes atacar porque {this.Name} no tiene vida.");
+            return $"No puedes atacar porque {this.Name} no tiene vida.";
         }
     }
 
-    public void CastSpell(ICharacter target, Spell spell)
+    public string CastSpell(ICharacter target, Spell spell)
     {
         if (this.spellBook.ContainsSpell(spell))
         {
             int damage = spell.AttackValue;
             target.ReceiveDamage(damage);
-            Console.WriteLine($"{this.Name} lanza {spell.Name} a {target.Name} causando {damage} de daño.");
+            return $"{this.Name} lanza {spell.Name} a {target.Name} causando {damage} de daño.";
         }
         else
         {
-            Console.WriteLine($"{this.Name} no conoce el hechizo {spell.Name}.");
+            return $"{this.Name} no conoce el hechizo {spell.Name}.";
         }
     }
     
-    public void ReceiveDamage(int damage)
+    public string ReceiveDamage(int damage)
     {
         this.Health -= damage;
-        if (this.Health < 0)
-        {
-            this.Health = 0;
-        }
-        Console.WriteLine($"{this.Name} recibe {damage} de daño. Vida restante: {this.Health}");
+        if (this.Health < 0) this.Health = 0;
+        return $"{this.Name} recibe {damage} de daño. Vida restante: {this.Health}";
     }
 
-    public void Heal()
+    public string Heal()
     {
         this.Health = this.InitialHealth;
-        Console.WriteLine($"{this.Name} ha sido curado. Vida restaurada a: {this.Health}");
+        return $"{this.Name} ha sido curado. Vida restaurada a: {this.Health}";
     }
 
     public string GetInfo()

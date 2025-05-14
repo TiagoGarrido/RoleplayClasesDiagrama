@@ -16,28 +16,30 @@ public class Dwarf : ICharacter
         this.InitialHealth = health;
     }
 
-    public void AddItem(IItem item)
+    public string AddItem(IItem item)
     {
         if (item != null)
         {
             this.items.Add(item);
+            return "Item agregado correctamente.";
         }
         else
         {
-            Console.WriteLine("No item agregado");
+            return "Este item no existe.";
         }
     }
 
-    public void RemoveItem(IItem item)
+    public string RemoveItem(IItem item)
     {
         if (item != null)
         {
             this.items.Remove(item);
+            return "Item removido correctamente.";
         }
         else
         {
-            Console.WriteLine("No item removido");
-        }
+            return  "Este item no existe.";
+        } 
     }
 
     public int TotalDamage()
@@ -61,34 +63,31 @@ public class Dwarf : ICharacter
         return totalDefense;
     }
 
-    public void Attack(ICharacter target)
+    public string Attack(ICharacter target)
     {
         if (this.Health > 0)
         {
             int damage = this.TotalDamage();
             target.ReceiveDamage(damage);
-            Console.WriteLine($"{this.Name} ataca a {target.Name} y causa {damage} de daño.");
+            return $"{this.Name} ataca a {target.Name} y causa {damage} de daño.";
         }
         else
         {
-            Console.WriteLine($"No puedes atacar porque {this.Name} no tiene vida.");
+            return $"No puedes atacar porque {this.Name} no tiene vida.";
         }
     }
 
-    public void ReceiveDamage(int damage)
+    public string ReceiveDamage(int damage)
     {
         this.Health -= damage;
-        if (this.Health < 0)
-        {
-            this.Health = 0;
-        }
-        Console.WriteLine($"{this.Name} recibe {damage} de daño. Vida restante: {this.Health}");
+        if (this.Health < 0) this.Health = 0;
+        return $"{this.Name} recibe {damage} de daño. Vida restante: {this.Health}";
     }
 
-    public void Heal()
+    public string Heal()
     {
-        this.Health = InitialHealth;
-        Console.WriteLine($"{this.Name} fue curado, su vida ahora es: {this.Health}");
+        this.Health = this.InitialHealth;
+        return $"{this.Name} ha sido curado. Vida restaurada a: {this.Health}";
     }
 
     public string GetInfo()

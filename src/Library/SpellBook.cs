@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.InteropServices.JavaScript;
 
 namespace Library;
 
@@ -14,27 +15,29 @@ public class SpellBook : ISpellbook
         this.Name = name;
     }
 
-    public void AddSpell(Spell spell)
+    public string AddSpell(Spell spell)
     {
         if (spell != null)
         {
             this.spells.Add(spell);
+            return $"hechizo {spell.Name} agregado correctamente.";
         }
         else
         {
-            Console.WriteLine("Ese hechizo no existe");
+            return "Este hechizo no existe.";
         }
     }
     
-    public void RemoveSpell(Spell spell)
+    public string RemoveSpell(Spell spell)
     {
         if (spell != null)
         {
             this.spells.Remove(spell);
+            return $"hechizo {spell.Name} removido correctamente.";
         }
         else
         {
-            Console.WriteLine("Ese hechizo no existe");
+            return $"Este hechizo no existe.";
         }
     }
     
