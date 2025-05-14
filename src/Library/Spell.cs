@@ -1,5 +1,4 @@
 namespace Library;
-
 public class Spell
 {
     private string name;
