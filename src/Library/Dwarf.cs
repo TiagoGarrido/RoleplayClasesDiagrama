@@ -2,18 +2,18 @@
 using System.Collections;
 using Library;
 
-public class Dwarf : Icharacter
+public class Dwarf : ICharacter
 {
     public string Name { get; set; }
-    public int health { get; set; }
-    public int initialHealth { get; set; }
+    public int Health { get; set; }
+    public int InitialHealth { get; set; }
     private ArrayList items = new ArrayList();
 
     public Dwarf(string name, int health)
     {
         this.Name = name;
-        this.health = health;
-        this.initialHealth = health;
+        this.Health = health;
+        this.InitialHealth = health;
     }
 
     public void AddItem(IItem item)
@@ -61,9 +61,9 @@ public class Dwarf : Icharacter
         return totalDefense;
     }
 
-    public void Attack(Icharacter target)
+    public void Attack(ICharacter target)
     {
-        if (this.health > 0)
+        if (this.Health > 0)
         {
             int damage = this.TotalDamage();
             target.ReceiveDamage(damage);
@@ -77,23 +77,23 @@ public class Dwarf : Icharacter
 
     public void ReceiveDamage(int damage)
     {
-        this.health -= damage;
-        if (this.health < 0)
+        this.Health -= damage;
+        if (this.Health < 0)
         {
-            this.health = 0;
+            this.Health = 0;
         }
-        Console.WriteLine($"{this.Name} recibe {damage} de daño. Vida restante: {this.health}");
+        Console.WriteLine($"{this.Name} recibe {damage} de daño. Vida restante: {this.Health}");
     }
 
     public void Heal()
     {
-        this.health = initialHealth;
-        Console.WriteLine($"{this.Name} fue curado, su vida ahora es: {this.health}");
+        this.Health = InitialHealth;
+        Console.WriteLine($"{this.Name} fue curado, su vida ahora es: {this.Health}");
     }
 
     public string GetInfo()
     {
-        string info = $"Nombre: {this.Name}, Vida: {this.health}/{this.initialHealth}\nItems:\n";
+        string info = $"Nombre: {this.Name}, Vida: {this.Health}/{this.InitialHealth}\nItems:\n";
         foreach (IItem item in this.items)
         {
             info += $"- {item.Name} (Ataque: {item.Attack}, Defensa: {item.Defense})\n";

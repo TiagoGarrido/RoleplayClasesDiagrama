@@ -9,7 +9,7 @@ public class DwarfTests
     public void TestCreateDwarf()
     {
         // Prueba la creación de un enano con nombre y vida inicial.
-        Icharacter enano = new Dwarf("Gimli", 100);
+        ICharacter enano = new Dwarf("Gimli", 100);
 
         // Verifica que la información del enano contenga el nombre y la vida inicial.
         Assert.That(enano.GetInfo(), Does.Contain("Nombre: Gimli"));
@@ -20,7 +20,7 @@ public class DwarfTests
     public void TestAddItem()
     {
         // Prueba la adición de un ítem al inventario del enano.
-        Icharacter enano = new Dwarf("Gimli", 100);
+        ICharacter enano = new Dwarf("Gimli", 100);
         IItem hacha = new Hacha("Hacha de batalla", 15);
 
         enano.AddItem(hacha);
@@ -35,7 +35,7 @@ public class DwarfTests
     public void TestRemoveItem()
     {
         // Prueba la eliminación de un ítem del inventario del enano.
-        Icharacter enano = new Dwarf("Gimli", 100);
+        ICharacter enano = new Dwarf("Gimli", 100);
         IItem hacha = new Hacha("Hacha de batalla", 15);
 
         enano.AddItem(hacha);
@@ -51,7 +51,7 @@ public class DwarfTests
     public void TestReceiveDamage()
     {
         // Prueba que el enano reciba daño correctamente.
-        Icharacter enano = new Dwarf("Gimli", 100);
+        ICharacter enano = new Dwarf("Gimli", 100);
 
         enano.ReceiveDamage(30);
 
@@ -63,7 +63,7 @@ public class DwarfTests
     public void TestHeal()
     {
         // Prueba que el enano pueda curarse y restaurar su vida inicial.
-        Icharacter enano = new Dwarf("Gimli", 100);
+        ICharacter enano = new Dwarf("Gimli", 100);
 
         enano.ReceiveDamage(50);
         enano.Heal();
@@ -76,7 +76,7 @@ public class DwarfTests
     public void TestTotalDamageAndDefense()
     {
         // Prueba el cálculo del daño y la defensa totales basados en los ítems del enano.
-        Icharacter enano = new Dwarf("Gimli", 100);
+        ICharacter enano = new Dwarf("Gimli", 100);
         IItem hacha = new Hacha("Hacha de batalla", 15);
         IItem escudo = new Escudo("Escudo robusto", 10);
 
@@ -92,8 +92,8 @@ public class DwarfTests
     public void TestAttack()
     {
         // Prueba que el enano pueda atacar a otro enano y reducir su vida.
-        Icharacter enano1 = new Dwarf("Gimli", 100);
-        Icharacter enano2 = new Dwarf("Thorin", 100);
+        ICharacter enano1 = new Dwarf("Gimli", 100);
+        ICharacter enano2 = new Dwarf("Thorin", 100);
         IItem hacha = new Hacha("Hacha de batalla", 20);
 
         enano1.AddItem(hacha);
@@ -107,8 +107,8 @@ public class DwarfTests
     public void TestAttackWithNoHealth()
     {
         // Prueba que un enano sin vida no pueda atacar.
-        Icharacter enano1 = new Dwarf("Gimli", 100);
-        Icharacter enano2 = new Dwarf("Thorin", 100);
+        ICharacter enano1 = new Dwarf("Gimli", 100);
+        ICharacter enano2 = new Dwarf("Thorin", 100);
         IItem hacha = new Hacha("Hacha de batalla", 20);
 
         enano1.AddItem(hacha);

@@ -8,7 +8,7 @@ class Program
         Console.WriteLine("Bienvenido a la aventura de rol!");
 
         // Crear personajes y objetos
-        Icharacter enano = new Dwarf("Gimli", 100);
+        ICharacter enano = new Dwarf("Gimli", 100);
         IItem martilloDeGuerra = new Martillo("Martillo de Guerra", 15,32); // Cambiar a la clase correcta
         IItem armaduraValiriana = new Armadura("Armadura Valiriana", 20);
 
@@ -21,9 +21,9 @@ class Program
         SangreDracarica.AddSpell(bolaDeFuego);
         SangreDracarica.AddSpell(llamarada);
 
-        Imagicalcharacter mago = new Wizard("Gandalf", 100, SangreDracarica);
-        ImagicItem baston = new Baston("Bastón Mágico", 10);
-        ImagicItem capa = new Capa("Capa Mágica", 10);
+        IMagicalCharacter mago = new Wizard("Gandalf", 100, SangreDracarica);
+        IMagicItem baston = new Baston("Bastón Mágico", 10);
+        IMagicItem capa = new Capa("Capa Mágica", 10);
 
         mago.AddMagicalItem(baston);
         mago.AddMagicalItem(capa);
@@ -35,14 +35,14 @@ class Program
         CorazonHelado.AddSpell(Nevada);
         CorazonHelado.AddSpell(picosH);
 
-        Imagicalcharacter mago1 = new Wizard("Sauron", 100, CorazonHelado);
-        ImagicItem bastonGigante = new Baston("Bastón de Hielo", 10);
-        ImagicItem capain = new Capa("Capa de Sigilo", 0);
+        IMagicalCharacter mago1 = new Wizard("Sauron", 100, CorazonHelado);
+        IMagicItem bastonGigante = new Baston("Bastón de Hielo", 10);
+        IMagicItem capain = new Capa("Capa de Sigilo", 0);
 
         mago1.AddMagicalItem(bastonGigante);
         mago1.AddMagicalItem(capain);
 
-        Icharacter elfo= new Elves("Legolas", 100);
+        ICharacter elfo= new Elves("Legolas", 100);
         IItem arco = new Arco("Arco de yggdrasil", 12);
         IItem tunicaElfica = new Armadura("Túnica Élfica", 8);
 

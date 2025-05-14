@@ -1,6 +1,6 @@
 namespace Library;
 
-public interface ImagicItem
+public interface IMagicItem
 {
     string Name { get; set; }
     int Attack { get; set; }

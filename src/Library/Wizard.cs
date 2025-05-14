@@ -2,19 +2,19 @@ using System.Collections;
 
 namespace Library;
 
-public class Wizard : Imagicalcharacter
+public class Wizard : IMagicalCharacter
 {
     public string Name { get; set; }
-    public int health { get; set; }
-    public int initialHealth { get; set; }
+    public int Health { get; set; }
+    public int InitialHealth { get; set; }
     private ArrayList items = new ArrayList();
     private ISpellbook spellBook;
 
     public Wizard(string name, int health, ISpellbook spellBook)
     {
         this.Name = name;
-        this.health = health;
-        this.initialHealth = health;
+        this.Health = health;
+        this.InitialHealth = health;
         this.spellBook = spellBook;
     }
 
@@ -41,7 +41,7 @@ public class Wizard : Imagicalcharacter
             Console.WriteLine("No item removido");
         }
     }
-    public void AddMagicalItem(ImagicItem item)
+    public void AddMagicalItem(IMagicItem item)
     {
         if (item != null)
         {
@@ -54,7 +54,7 @@ public class Wizard : Imagicalcharacter
     }
 
     
-    public void RemoveMagicalItem(ImagicItem item)
+    public void RemoveMagicalItem(IMagicItem item)
     {
         if (item != null)
         {
@@ -75,7 +75,7 @@ public class Wizard : Imagicalcharacter
             {
                 totalDamage += normalItem.GetAttackValue();
             }
-            else if (item is ImagicItem magicItem)
+            else if (item is IMagicItem magicItem)
             {
                 totalDamage += magicItem.GetAttackValue();
             }
@@ -92,7 +92,7 @@ public class Wizard : Imagicalcharacter
             {
                 totalDefense += normalItem.GetDefenseValue();
             }
-            else if (item is ImagicItem magicItem)
+            else if (item is IMagicItem magicItem)
             {
                 totalDefense += magicItem.GetDefenseValue();
             }
@@ -100,9 +100,9 @@ public class Wizard : Imagicalcharacter
         return totalDefense;
     }
 
-    public void Attack(Icharacter target)
+    public void Attack(ICharacter target)
     {
-        if (this.health > 0)
+        if (this.Health > 0)
         {
             int damage = this.TotalDamage();
             target.ReceiveDamage(damage);
@@ -114,7 +114,7 @@ public class Wizard : Imagicalcharacter
         }
     }
 
-    public void CastSpell(Icharacter target, Spell spell)
+    public void CastSpell(ICharacter target, Spell spell)
     {
         if (this.spellBook.ContainsSpell(spell))
         {
@@ -128,29 +128,28 @@ public class Wizard : Imagicalcharacter
         }
     }
     
-    
     public void ReceiveDamage(int damage)
     {
-        this.health -= damage;
-        if (this.health < 0)
+        this.Health -= damage;
+        if (this.Health < 0)
         {
-            this.health = 0;
+            this.Health = 0;
         }
-        Console.WriteLine($"{this.Name} recibe {damage} de daño. Vida restante: {this.health}");
+        Console.WriteLine($"{this.Name} recibe {damage} de daño. Vida restante: {this.Health}");
     }
 
     public void Heal()
     {
-        this.health = this.initialHealth;
-        Console.WriteLine($"{this.Name} ha sido curado. Vida restaurada a: {this.health}");
+        this.Health = this.InitialHealth;
+        Console.WriteLine($"{this.Name} ha sido curado. Vida restaurada a: {this.Health}");
     }
 
     public string GetInfo()
     {
-        string info = $"Nombre: {this.Name} - Vida: {this.health}/{this.initialHealth}\nItems:\n";
+        string info = $"Nombre: {this.Name} - Vida: {this.Health}/{this.InitialHealth}\nItems:\n";
         foreach (var item in this.items)
         {
-            if (item is ImagicItem magicItem)
+            if (item is IMagicItem magicItem)
             {
                 info += $"- {magicItem.Name} (Ataque: {magicItem.GetAttackValue()}, Defensa: {magicItem.GetDefenseValue()})\n";
             }

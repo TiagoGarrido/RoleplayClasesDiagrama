@@ -24,7 +24,6 @@ public class Item
         set { defenseValue = value; }
     }
     
-    
     public Item(string name, int attack, int defense)
     {
         this.name = name;
@@ -41,6 +40,4 @@ public class Item
     {
         return defenseValue;
     }
-
-  
 }

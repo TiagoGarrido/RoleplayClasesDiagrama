@@ -1,5 +1,4 @@
 namespace Library;
-
 public class Arco : IItem
 {
     public Arco(string name, int attack)

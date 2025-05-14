@@ -1,18 +1,18 @@
 namespace Library;
 using System.Collections;
 
-public class Elves : Icharacter
+public class Elves : ICharacter
 {
     public string Name { get; set; }
-    public int health { get; set; }
-    public int initialHealth { get; set; }
+    public int Health { get; set; }
+    public int InitialHealth { get; set; }
     private ArrayList items = new ArrayList();
 
     public Elves(string name, int health)
     {
         this.Name = name;
-        this.health = health;
-        this.initialHealth = health;
+        this.Health = health;
+        this.InitialHealth = health;
     }
 
     public void AddItem(IItem item)
@@ -61,20 +61,20 @@ public class Elves : Icharacter
 
     public void ReceiveDamage(int damage)
     {
-        this.health -= damage;
-        if (this.health < 0) this.health = 0;
-        Console.WriteLine($"{this.Name} recibe {damage} de daño. Vida restante: {this.health}");
+        this.Health -= damage;
+        if (this.Health < 0) this.Health = 0;
+        Console.WriteLine($"{this.Name} recibe {damage} de daño. Vida restante: {this.Health}");
     }
 
     public void Heal()
     {
-        this.health = this.initialHealth;
-        Console.WriteLine($"{this.Name} ha sido curado. Vida restaurada a: {this.health}");
+        this.Health = this.InitialHealth;
+        Console.WriteLine($"{this.Name} ha sido curado. Vida restaurada a: {this.Health}");
     }
 
     public string GetInfo()
     {
-        string info = $"Nombre: {this.Name}, Vida: {this.health}/{this.initialHealth}\nItems:\n";
+        string info = $"Nombre: {this.Name}, Vida: {this.Health}/{this.InitialHealth}\nItems:\n";
         foreach (IItem item in this.items)
         {
             info += $"- {item.Name} (Ataque: {item.Attack}, Defensa: {item.Defense})\n";
@@ -84,9 +84,9 @@ public class Elves : Icharacter
         return info;
     }
 
-    public void Attack(Icharacter target)
+    public void Attack(ICharacter target)
     {
-        if (this.health > 0)
+        if (this.Health > 0)
         {
             int damage = this.TotalDamage();
             target.ReceiveDamage(damage);
@@ -97,5 +97,4 @@ public class Elves : Icharacter
             Console.WriteLine($"No puedes atacar porque {this.Name} no tiene vida.");
         }
     }
-    
 }

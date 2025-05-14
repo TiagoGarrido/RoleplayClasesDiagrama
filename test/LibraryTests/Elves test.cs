@@ -9,7 +9,7 @@ public class ElvesTests
     public void TestCreateElves()
     {
         // Prueba la creación de un elfo con nombre y vida inicial.
-        Icharacter elfo = new Elves("Legolas", 100);
+        ICharacter elfo = new Elves("Legolas", 100);
 
         // Verifica que la información del elfo contenga el nombre y la vida inicial.
         Assert.That(elfo.GetInfo(), Does.Contain("Nombre: Legolas"));
@@ -20,7 +20,7 @@ public class ElvesTests
     public void TestAddItem()
     {
         // Prueba la adición de un ítem al inventario del elfo.
-        Icharacter elfo = new Elves("Legolas", 100); 
+        ICharacter elfo = new Elves("Legolas", 100); 
         IItem arco = new Arco("Arco de yggdrasil", 12);
 
         elfo.AddItem(arco);
@@ -35,7 +35,7 @@ public class ElvesTests
     public void TestRemoveItem()
     {
         // Prueba la eliminación de un ítem del inventario del elfo.
-        Icharacter elfo = new Elves("Legolas", 100);
+        ICharacter elfo = new Elves("Legolas", 100);
         IItem arco = new Arco("Arco de yggdrasil", 12);
 
         elfo.AddItem(arco);
@@ -51,7 +51,7 @@ public class ElvesTests
     public void TestReceiveDamage()
     {
         // Prueba que el elfo reciba daño correctamente.
-        Icharacter elfo = new Elves("Legolas", 100);
+        ICharacter elfo = new Elves("Legolas", 100);
 
         elfo.ReceiveDamage(30);
 
@@ -63,7 +63,7 @@ public class ElvesTests
     public void TestHeal()
     {
         // Prueba que el elfo pueda curarse y restaurar su vida inicial.
-        Icharacter elfo = new Elves("Legolas", 100);
+        ICharacter elfo = new Elves("Legolas", 100);
 
         elfo.ReceiveDamage(50);
         elfo.Heal();
@@ -76,7 +76,7 @@ public class ElvesTests
     public void TestTotalDamageAndDefense()
     {
         // Prueba el cálculo del daño y la defensa totales basados en los ítems del elfo.
-        Icharacter elfo = new Elves("Legolas", 100);
+        ICharacter elfo = new Elves("Legolas", 100);
         IItem arco = new Arco("Arco de yggdrasil", 12);
         IItem tunica= new Armadura("Túnica Élfica",  8);
 
@@ -92,8 +92,8 @@ public class ElvesTests
     public void TestAttack()
     {
         // Prueba que el elfo pueda atacar a otro elfo y reducir su vida.
-        Icharacter elfo1 = new Elves("Legolas", 100);
-        Icharacter elfo2 = new Elves("Thranduil", 100);
+        ICharacter elfo1 = new Elves("Legolas", 100);
+        ICharacter elfo2 = new Elves("Thranduil", 100);
         IItem arco = new Arco("Arco de yggdrasil", 20);
 
         elfo1.AddItem(arco);
@@ -107,8 +107,8 @@ public class ElvesTests
     public void TestAttackWithNoHealth()
     {
         // Prueba que un elfo sin vida no pueda atacar.
-        Icharacter elfo1 = new Elves("Legolas", 100);
-        Icharacter elfo2 = new Elves("Thranduil", 100);
+        ICharacter elfo1 = new Elves("Legolas", 100);
+        ICharacter elfo2 = new Elves("Thranduil", 100);
         IItem arco = new Arco("Arco de yggdrasil", 20);
 
         elfo1.AddItem(arco);
@@ -118,5 +118,4 @@ public class ElvesTests
         // Verifica que el ataque no afecte la vida del objetivo.
         Assert.That(elfo2.GetInfo(), Does.Contain("Vida: 100"));
     }
-    
 }

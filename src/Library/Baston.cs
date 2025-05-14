@@ -1,7 +1,6 @@
 namespace Library;
 
-public class Baston : ImagicItem
-
+public class Baston : IMagicItem
 {
     public Baston(string name, int attack)
     {

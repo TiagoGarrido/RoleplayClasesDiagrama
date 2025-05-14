@@ -15,5 +15,4 @@ public class Martillo : IItem
 
     public int GetAttackValue() => Attack;
     public int GetDefenseValue() => Defense;
-    
 }

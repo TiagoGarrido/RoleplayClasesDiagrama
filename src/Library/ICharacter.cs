@@ -1,10 +1,10 @@
 namespace Library;
 
-public interface Icharacter
+public interface ICharacter
 {
     string Name { get; set; }
-    int health { get; set; }
-    int initialHealth { get; set; }
+    int Health { get; set; }
+    int InitialHealth { get; set; }
     void AddItem(IItem item);
     int TotalDefense();
     int TotalDamage();
@@ -12,5 +12,5 @@ public interface Icharacter
     void ReceiveDamage(int damage);
     void Heal();
     string GetInfo();
-    void Attack(Icharacter target); // Nuevo método para atacar
+    void Attack(ICharacter target); // Nuevo método para atacar
 }

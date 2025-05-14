@@ -8,7 +8,7 @@ public class WizardTests
     [Test]
     public void TestCreateWizard()
     {
-        Imagicalcharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
+        IMagicalCharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
 
         Assert.That(wizard.GetInfo(), Does.Contain("Nombre: Gandalf"));
         Assert.That(wizard.GetInfo(), Does.Contain("Vida: 100"));
@@ -18,8 +18,8 @@ public class WizardTests
     [Test]
     public void TestAddItem()
     {
-        Imagicalcharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
-        ImagicItem baston = new Baston("Bastón de Fuego", 15);
+        IMagicalCharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
+        IMagicItem baston = new Baston("Bastón de Fuego", 15);
 
         wizard.AddMagicalItem(baston);
 
@@ -31,8 +31,8 @@ public class WizardTests
     [Test]
     public void TestRemoveItem()
     {
-        Imagicalcharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
-        ImagicItem baston = new Baston("Bastón de Fuego", 15);
+        IMagicalCharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
+        IMagicItem baston = new Baston("Bastón de Fuego", 15);
 
         wizard.AddMagicalItem(baston);
         wizard.RemoveMagicalItem(baston);
@@ -44,7 +44,7 @@ public class WizardTests
     [Test]
     public void TestReceiveDamage()
     {
-        Icharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
+        ICharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
 
         wizard.ReceiveDamage(30);
 
@@ -54,7 +54,7 @@ public class WizardTests
     [Test]
     public void TestHeal()
     {
-        Icharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
+        ICharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
 
         wizard.ReceiveDamage(50);
         wizard.Heal();
@@ -65,9 +65,9 @@ public class WizardTests
     [Test]
     public void TestTotalDamageAndDefense()
     {
-        Imagicalcharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
-        ImagicItem baston = new Baston("Bastón de Fuego", 15);
-        ImagicItem tunica = new Capa("Túnica Mágica", 10);
+        IMagicalCharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
+        IMagicItem baston = new Baston("Bastón de Fuego", 15);
+        IMagicItem tunica = new Capa("Túnica Mágica", 10);
 
         wizard.AddMagicalItem(baston);
         wizard.AddMagicalItem(tunica);
@@ -79,9 +79,9 @@ public class WizardTests
     [Test]
     public void TestAttack()
     {
-        Imagicalcharacter wizard1 = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
-        Imagicalcharacter wizard2 = new Wizard("Saruman", 100, new SpellBook("Libro de Hechizos"));
-        ImagicItem baston = new Baston("Bastón de Fuego", 20);
+        IMagicalCharacter wizard1 = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
+        IMagicalCharacter wizard2 = new Wizard("Saruman", 100, new SpellBook("Libro de Hechizos"));
+        IMagicItem baston = new Baston("Bastón de Fuego", 20);
 
         wizard1.AddMagicalItem(baston);
         wizard1.Attack(wizard2);
@@ -120,9 +120,9 @@ public class WizardTests
     [Test]
     public void TestAttackWithNoHealth()
     {
-        Imagicalcharacter wizard1 = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
-        Imagicalcharacter wizard2 = new Wizard("Saruman", 100, new SpellBook("Otro Libro"));
-        ImagicItem baston = new Baston("Bastón de Fuego", 20);
+        IMagicalCharacter wizard1 = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
+        IMagicalCharacter wizard2 = new Wizard("Saruman", 100, new SpellBook("Otro Libro"));
+        IMagicItem baston = new Baston("Bastón de Fuego", 20);
 
         wizard1.AddMagicalItem(baston);
         wizard1.ReceiveDamage(100);
@@ -134,7 +134,7 @@ public class WizardTests
     [Test]
     public void TestAddNonMagicalItem()
     {
-        Imagicalcharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
+        IMagicalCharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
         IItem espada = new Espada("Espada de Acero", 10);
 
         wizard.AddItem(espada);
@@ -146,7 +146,7 @@ public class WizardTests
     [Test]
     public void TestAddMultipleNonMagicalItems()
     {
-        Imagicalcharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
+        IMagicalCharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
         IItem espada = new Espada("Espada de Acero", 10);
         IItem escudo = new Escudo("Escudo de Hierro", 5);
 
@@ -162,7 +162,7 @@ public class WizardTests
     [Test]
     public void TestRemoveNonMagicalItem()
     {
-        Imagicalcharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
+        IMagicalCharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
         IItem espada = new Espada("Espada de Acero", 10);
 
         wizard.AddItem(espada);
@@ -175,7 +175,7 @@ public class WizardTests
     [Test]
     public void TestRemoveMultipleNonMagicalItems()
     {
-        Imagicalcharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
+        IMagicalCharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
         IItem espada = new Espada("Espada de Acero", 10);
         IItem escudo = new Escudo("Escudo de Hierro", 5);
 

@@ -11,5 +11,4 @@ public interface ISpellbook
     string GetSpellsInfo();
     void RemoveSpell(Spell spell);
     void AddSpell(Spell spell);
-
 }
