@@ -49,6 +49,54 @@ public class Heroe : ICharacter
 
         return total;
     }
+
+    public string ReceiveDamage(int damage)
+    {
+        int finalDamage = damage - TotalDefense();
+        if (finalDamage < 0)
+        {
+            finalDamage = 0;
+        }
+
+        Health -= finalDamage;
+        return $"{Name} recibio {finalDamage} de daño. Tiene {Health} de salud";
+    }
+
+    public string Heal()
+    {
+        if (VictoryPoints >= 5)
+        {
+            Health = InitialHealth;
+            return $"{Name} se curo.";
+        }
+
+        return $"{Name} no tiene suficientes puntos de victoria para curarse";
+    }
+
+    public string Attack(ICharacter target)
+    {
+        target.ReceiveDamage((TotalDamage()));
+        if (target.Health <= 0 && target is Enemy enemy)
+        {
+            VictoryPoints += enemy.VictoryPoints;
+            if (VictoryPoints >= 5)
+                Heal();
+            return $"{Name} derroto a {target.Name} y gano {enemy.VictoryPoints} PV";
+        }
+
+        return $"{Name} ataco a {target.Name}";
+    }
+
+    public bool IsDead()
+    {
+        if (Health <= 0)
+        {
+            return true;
+        }
+
+        return false;
+    }
 }
+
 
     
