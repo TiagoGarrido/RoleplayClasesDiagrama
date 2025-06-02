@@ -1,20 +1,21 @@
 ﻿namespace Library;
 
-public class Heroe : ICharacter
+public class Enemigo : ICharacter
 {
     public string Name { get; set; }
     public int Health { get; set; }
     public int InitialHealth { get; set; }
-    public int VictoryPoints { get; private set; } = 0;
+    public int VictoryPoints { get; private set; }
     private List<IItem> items = new List<IItem>();
 
-    public Heroe(string name, int health)
+    public Enemigo(string name, int health, int victoryPoints)
     {
         Name = name;
         Health = health;
         InitialHealth = health;
+        VictoryPoints = victoryPoints;
     }
-
+    
     public string AddItem(IItem item)
     {
         if (item != null)
@@ -64,10 +65,8 @@ public class Heroe : ICharacter
 
     public string Attack(ICharacter target)
     {
-        target.ReceiveDamage((TotalDamage()));
-        if (target.Health <= 0 && target is Enemigo enemigo)
+        if (this.Health > 0)
         {
-            VictoryPoints += enemigo.VictoryPoints;
             int damage = this.TotalDamage();
             target.ReceiveDamage(damage);
             return $"{this.Name} ataca a {target.Name} y causa {damage} de daño.";
@@ -81,7 +80,11 @@ public class Heroe : ICharacter
     public string ReceiveDamage(int damage)
     {
         this.Health -= damage;
-        if (this.Health < 0) this.Health = 0;
+        if (this.Health <= 0)
+        {
+            this.VictoryPoints = 0;
+            return $"{this.Name} murio.";
+        }
         return $"{this.Name} recibe {damage} de daño. Vida restante: {this.Health}";
     }
 
@@ -103,6 +106,3 @@ public class Heroe : ICharacter
         return info;
     }
 }
-
-
-    
