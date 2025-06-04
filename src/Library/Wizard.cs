@@ -3,7 +3,7 @@ using System.Runtime.InteropServices.JavaScript;
 
 namespace Library;
 
-public class Wizard : IMagicalCharacter
+public class Wizard : Heroes, IMagicalCharacter
 {
     public string Name { get; set; }
     public int Health { get; set; }
@@ -21,7 +21,7 @@ public class Wizard : IMagicalCharacter
         this.spellBook = spellBook;
     }
 
-    public string AddItem(IItem item)
+    public override string AddItem(IItem item)
     {
         if (item != null)
         {
@@ -34,7 +34,7 @@ public class Wizard : IMagicalCharacter
         }
     }
 
-    public string RemoveItem(IItem item)
+    public override string RemoveItem(IItem item)
     {
         if (item != null)
         {
@@ -74,7 +74,7 @@ public class Wizard : IMagicalCharacter
         }
     }
 
-    public int TotalDamage()
+    public override int TotalDamage()
     {
         int totalDamage = 0;
         foreach (var item in this.items)
@@ -91,7 +91,7 @@ public class Wizard : IMagicalCharacter
         return totalDamage;
     }
 
-    public int TotalDefense()
+    public override int TotalDefense()
     {
         int totalDefense = 0;
         foreach (var item in this.items)
@@ -108,7 +108,7 @@ public class Wizard : IMagicalCharacter
         return totalDefense;
     }
 
-    public string Attack(ICharacter target)
+    public override string Attack(ICharacter target)
     {
         if(target.Health <= 0)
         {
@@ -160,20 +160,20 @@ public class Wizard : IMagicalCharacter
         }
     }
 
-    public string ReceiveDamage(int damage)
+    public override string ReceiveDamage(int damage)
     {
         this.Health -= damage;
         if (this.Health < 0) this.Health = 0;
         return $"{this.Name} recibe {damage} de daño. Vida restante: {this.Health}";
     }
 
-    public string Heal()
+    public override string Heal()
     {
         this.Health = this.InitialHealth;
         return $"{this.Name} ha sido curado. Vida restaurada a: {this.Health}";
     }
 
-    public string GetInfo()
+    public override string GetInfo()
     {
         string info = $"Nombre: {this.Name} - Vida: {this.Health}/{this.InitialHealth}\nItems:\n";
         foreach (var item in this.items)

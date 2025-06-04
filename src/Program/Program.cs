@@ -8,7 +8,7 @@ class Program
         Console.WriteLine("Bienvenido a la aventura de rol!");
 
         // Crear personajes y objetos
-        ICharacter enano = new Dwarf("Gimli", 100);
+        Heroes enano = new Dwarf("Gimli", 100);
         IItem martilloDeGuerra = new Martillo("Martillo de Guerra", 15,32); // Cambiar a la clase correcta
         IItem armaduraValiriana = new Armadura("Armadura Valiriana", 20);
 
@@ -35,37 +35,43 @@ class Program
         Console.WriteLine(CorazonHelado.AddSpell(Nevada));
         Console.WriteLine(CorazonHelado.AddSpell(picosH));
 
-        IMagicalCharacter mago1 = new Wizard("Sauron", 100, CorazonHelado);
+        Wizard mago1 = new Wizard("Sauron", 100, CorazonHelado);
         IMagicItem bastonGigante = new Baston("Bastón de Hielo", 10);
         IMagicItem capain = new Capa("Capa de Sigilo", 0);
 
         Console.WriteLine(mago1.AddMagicalItem(bastonGigante));
         Console.WriteLine(mago1.AddMagicalItem(capain));
 
-        ICharacter elfo= new Elves("Legolas", 100);
+        Elves elfo= new Elves("Legolas", 100);
         IItem arco = new Arco("Arco de yggdrasil", 64);
         IItem tunicaElfica = new Armadura("Túnica Élfica", 8);
-        ICharacter Pennino = new Enemigo("Pennino", 50, 10);
+        Enemigo Pennino = new Enemigo("Pennino", 50, 10);
         Console.WriteLine(elfo.AddItem(arco));
         Console.WriteLine(elfo.AddItem(tunicaElfica));
-        Console.WriteLine(elfo.Attack(Pennino));
 
         
 
 
+// Crear listas de héroes y enemigos
+        var heroes = new List<Heroes> { enano, elfo, mago1 };
+        var enemigos = new List<Enemigo> { Pennino };
 
-        // Simulación de combate
-        Console.WriteLine( mago.Attack(enano));
-        Console.WriteLine(mago.CastSpell(enano, bolaDeFuego));
-        Console.WriteLine(mago1.CastSpell(mago, Nevada));
-        Console.WriteLine(enano.Attack(elfo));
-        Console.WriteLine(elfo.Attack(mago1));
-        Console.WriteLine(enano.Heal());
+// Crear el encuentro
+        Encounter encounter = new Encounter(heroes, enemigos); 
+        Console.WriteLine(encounter.DoEncounter());
+        /*// Simulación de combate
+                Console.WriteLine(elfo.Attack(Pennino));
+                Console.WriteLine( mago.Attack(enano));
+                Console.WriteLine(mago.CastSpell(enano, bolaDeFuego));
+                Console.WriteLine(mago1.CastSpell(mago, Nevada));
+                Console.WriteLine(enano.Attack(elfo));
+                Console.WriteLine(elfo.Attack(mago1));
+                Console.WriteLine(enano.Heal());
 
-        // Mostrar información final
-        Console.WriteLine(enano.GetInfo());
-        Console.WriteLine(mago.GetInfo());
-        Console.WriteLine(mago1.GetInfo());
-        Console.WriteLine(elfo.GetInfo());
+                // Mostrar información final
+                Console.WriteLine(enano.GetInfo());
+                Console.WriteLine(mago.GetInfo());
+                Console.WriteLine(mago1.GetInfo());
+                Console.WriteLine(elfo.GetInfo());*/
     }
 }
