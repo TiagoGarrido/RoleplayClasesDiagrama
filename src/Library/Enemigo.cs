@@ -5,7 +5,8 @@ public class Enemigo : ICharacter
     public string Name { get; set; }
     public int Health { get; set; }
     public int InitialHealth { get; set; }
-    public int VictoryPoints { get; private set; }
+    public int VictoryPoints { get; set; }
+    
     private List<IItem> items = new List<IItem>();
 
     public Enemigo(string name, int health, int victoryPoints)
@@ -65,15 +66,22 @@ public class Enemigo : ICharacter
 
     public string Attack(ICharacter target)
     {
-        if (this.Health > 0)
+        if (target.Health <= 0)
         {
-            int damage = this.TotalDamage();
-            target.ReceiveDamage(damage);
-            return $"{this.Name} ataca a {target.Name} y causa {damage} de daño.";
+            return $"{target.Name} ya no tiene vida para recibir daño.";
         }
         else
         {
-            return $"No puedes atacar porque {this.Name} no tiene vida.";
+            if (this.Health > 0)
+            {
+                int damage = this.TotalDamage();
+                target.ReceiveDamage(damage);
+                return $"{this.Name} ataca a {target.Name} y causa {damage} de daño.";
+            }
+            else
+            {
+                return $"No puedes atacar porque {this.Name} no tiene vida.";
+            }
         }
     }
 
@@ -82,7 +90,7 @@ public class Enemigo : ICharacter
         this.Health -= damage;
         if (this.Health <= 0)
         {
-            this.VictoryPoints = 0;
+            this.Health = 0;
             return $"{this.Name} murio.";
         }
         return $"{this.Name} recibe {damage} de daño. Vida restante: {this.Health}";

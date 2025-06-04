@@ -43,11 +43,16 @@ class Program
         Console.WriteLine(mago1.AddMagicalItem(capain));
 
         ICharacter elfo= new Elves("Legolas", 100);
-        IItem arco = new Arco("Arco de yggdrasil", 12);
+        IItem arco = new Arco("Arco de yggdrasil", 64);
         IItem tunicaElfica = new Armadura("Túnica Élfica", 8);
-
+        ICharacter Pennino = new Enemigo("Pennino", 50, 10);
         Console.WriteLine(elfo.AddItem(arco));
         Console.WriteLine(elfo.AddItem(tunicaElfica));
+        Console.WriteLine(elfo.Attack(Pennino));
+
+        
+
+
 
         // Simulación de combate
         Console.WriteLine( mago.Attack(enano));

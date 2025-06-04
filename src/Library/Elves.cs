@@ -4,6 +4,8 @@ using System.Collections;
 public class Elves : ICharacter
 {
     public string Name { get; set; }
+
+    public int VictoryPoints { get; set; } = 0;
     public int Health { get; set; }
     public int InitialHealth { get; set; }
     private ArrayList items = new ArrayList();
@@ -83,20 +85,33 @@ public class Elves : ICharacter
         }
         info += $"Total Ataque: {this.TotalDamage()}\n";
         info += $"Total Defensa: {this.TotalDefense()}\n";
+        info += $"Puntos de Victoria: {this.VictoryPoints}\n";
         return info;
     }
 
     public string Attack(ICharacter target)
     {
-        if (this.Health > 0)
+       if(target.Health <= 0)
         {
-            int damage = this.TotalDamage();
-            target.ReceiveDamage(damage);
-            return $"{this.Name} ataca a {target.Name} y causa {damage} de daño.";
+            return $"{target.Name} ya no tiene vida para recibir daño.";
         }
         else
         {
-            return $"No puedes atacar porque {this.Name} no tiene vida.";
+            if (this.Health > 0)
+            {
+                int damage = this.TotalDamage();
+                target.ReceiveDamage(damage);
+                if (target.Health <= 0)
+                {
+                    this.VictoryPoints += target.VictoryPoints;
+                }
+
+                return $"{this.Name} ataca a {target.Name} y causa {damage} de daño.";
+            }
+            else
+            {
+                return $"No puedes atacar porque {this.Name} no tiene vida.";
+            }
         }
     }
 }

@@ -7,6 +7,8 @@ public class Wizard : IMagicalCharacter
 {
     public string Name { get; set; }
     public int Health { get; set; }
+    public int VictoryPoints { get; set; } = 0;
+
     public int InitialHealth { get; set; }
     private ArrayList items = new ArrayList();
     private ISpellbook spellBook;
@@ -108,32 +110,56 @@ public class Wizard : IMagicalCharacter
 
     public string Attack(ICharacter target)
     {
-        if (this.Health > 0)
+        if(target.Health <= 0)
         {
-            int damage = this.TotalDamage();
-            target.ReceiveDamage(damage);
-            return $"{this.Name} ataca a {target.Name} y causa {damage} de daño.";
+            return $"{target.Name} ya no tiene vida para recibir daño.";
         }
         else
         {
-            return $"No puedes atacar porque {this.Name} no tiene vida.";
+            if (this.Health > 0)
+            {
+                int damage = this.TotalDamage();
+                target.ReceiveDamage(damage);
+                if (target.Health <= 0)
+                {
+                    this.VictoryPoints += target.VictoryPoints;
+                }
+
+                return $"{this.Name} ataca a {target.Name} y causa {damage} de daño.";
+            }
+            else
+            {
+                return $"No puedes atacar porque {this.Name} no tiene vida.";
+            }
         }
     }
 
     public string CastSpell(ICharacter target, Spell spell)
     {
-        if (this.spellBook.ContainsSpell(spell))
+        if (target.Health <= 0)
         {
-            int damage = spell.AttackValue;
-            target.ReceiveDamage(damage);
-            return $"{this.Name} lanza {spell.Name} a {target.Name} causando {damage} de daño.";
+            return $"{target.Name} ya no tiene vida para recibir daño.";
         }
         else
         {
-            return $"{this.Name} no conoce el hechizo {spell.Name}.";
+            if (this.spellBook.ContainsSpell(spell))
+            {
+                int damage = spell.AttackValue;
+                target.ReceiveDamage(damage);
+                if (target.Health <= 0)
+                {
+                    this.VictoryPoints += target.VictoryPoints;
+                }
+
+                return $"{this.Name} lanza {spell.Name} a {target.Name} causando {damage} de daño.";
+            }
+            else
+            {
+                return $"{this.Name} no conoce el hechizo {spell.Name}.";
+            }
         }
     }
-    
+
     public string ReceiveDamage(int damage)
     {
         this.Health -= damage;
@@ -166,7 +192,7 @@ public class Wizard : IMagicalCharacter
         {
             info += $"Libro de Hechizos: {this.spellBook.Name}\n";
         }
-
+        info += $"Puntos de Victoria: {this.VictoryPoints}\n";
         return info;
     }
 }

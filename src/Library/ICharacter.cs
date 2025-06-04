@@ -2,7 +2,7 @@ using System.Runtime.InteropServices.JavaScript;
 
 namespace Library;
 
-public interface ICharacter
+public interface ICharacter 
 {
     string Name { get; set; }
     int Health { get; set; }
@@ -14,5 +14,6 @@ public interface ICharacter
     string ReceiveDamage(int damage);
     string Heal();
     string GetInfo();
-    string Attack(ICharacter target); // Nuevo método para atacar
+    string Attack(ICharacter target); 
+    int VictoryPoints { get; set; }
 }
