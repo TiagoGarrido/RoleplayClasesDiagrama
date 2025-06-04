@@ -1,17 +1,9 @@
 namespace Library;
 
-public class Armadura : IItem
+public class Armadura : ItemBase
 {
-    public Armadura(string name, int defense)
+    public Armadura(string name, int defense) : base(name,0, defense)
     {
-        Name = name;
-        Attack = 0;
-        Defense = defense; 
+        
     }
-    public string Name { get; set; }
-    public int Attack { get; set; }
-    public int Defense { get; set; }
-
-    public int GetAttackValue() => Attack;
-    public int GetDefenseValue() => Defense;
 }

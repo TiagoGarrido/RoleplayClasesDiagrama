@@ -1,108 +1,17 @@
 ﻿namespace Library;
 
-public class Heroe : ICharacter
+public class Heroe : HeroeHerencia
 {
-    public string Name { get; set; }
-    public int Health { get; set; }
-    public int InitialHealth { get; set; }
-    public int VictoryPoints { get; private set; } = 0;
-    private List<IItem> items = new List<IItem>();
+    public Heroe(string name, int initialHealth) : base(name, initialHealth) { }
 
-    public Heroe(string name, int health)
+    public override string AddItem(IItem item)
     {
-        Name = name;
-        Health = health;
-        InitialHealth = health;
-    }
-
-    public string AddItem(IItem item)
-    {
-        if (item != null)
+        if (item is IMagic)
         {
-            this.items.Add(item);
-            return "Item agregado correctamente.";
-        }
-        else
-        {
-            return "Este item no existe.";
-        }
-    }
-
-    public string RemoveItem(IItem item)
-    {
-        if (item != null)
-        {
-            this.items.Remove(item);
-            return "Item removido correctamente.";
-        }
-        else
-        {
-            return  "Este item no existe.";
-        } 
-    }
-
-    public int TotalDamage()
-    {
-        int totalattack = 0;
-        foreach (IItem item in this.items)
-        {
-            totalattack += item.Attack;
-        }
-        return totalattack;
-    }
-
-    public int TotalDefense()
-    {
-        int totalDefense = 0;
-        foreach (IItem item in this.items)
-        {
-            totalDefense += item.Defense;
+            return $"{Name} no puede usar ítems mágicos.";
         }
 
-        return totalDefense;
-    }
-
-    public string Attack(ICharacter target)
-    {
-        target.ReceiveDamage((TotalDamage()));
-        if (target.Health <= 0 && target is Enemigo enemigo)
-        {
-            VictoryPoints += enemigo.VictoryPoints;
-            int damage = this.TotalDamage();
-            target.ReceiveDamage(damage);
-            return $"{this.Name} ataca a {target.Name} y causa {damage} de daño.";
-        }
-        else
-        {
-            return $"No puedes atacar porque {this.Name} no tiene vida.";
-        }
-    }
-
-    public string ReceiveDamage(int damage)
-    {
-        this.Health -= damage;
-        if (this.Health < 0) this.Health = 0;
-        return $"{this.Name} recibe {damage} de daño. Vida restante: {this.Health}";
-    }
-
-    public string Heal()
-    {
-        this.Health = this.InitialHealth;
-        return $"{this.Name} ha sido curado. Vida restaurada a: {this.Health}";
-    }
-
-    public string GetInfo()
-    {
-        string info = $"Nombre: {this.Name}, Vida: {this.Health}/{this.InitialHealth}\nItems:\n";
-        foreach (IItem item in this.items)
-        {
-            info += $"- {item.Name} (Ataque: {item.Attack}, Defensa: {item.Defense})\n";
-        }
-        info += $"Total Ataque: {this.TotalDamage()}\n";
-        info += $"Total Defensa: {this.TotalDefense()}\n";
-        return info;
+        Items.Add(item);
+        return $"{Name} ha agregado el item {item.Name}.";
     }
 }
-
-
-    

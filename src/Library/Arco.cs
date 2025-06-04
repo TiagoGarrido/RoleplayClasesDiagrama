@@ -1,17 +1,8 @@
 namespace Library;
-public class Arco : IItem
+public class Arco : ItemBase
 {
-    public Arco(string name, int attack)
+    public Arco(string name, int attack) : base(name, attack,0)
     {
-        Name = name;
-        Attack = attack;
-        Defense = 0; 
+        
     }
-
-    public string Name { get; set; }
-    public int Attack { get; set; }
-    public int Defense { get; set; }
-
-    public int GetAttackValue() => Attack;
-    public int GetDefenseValue() => Defense;
 }

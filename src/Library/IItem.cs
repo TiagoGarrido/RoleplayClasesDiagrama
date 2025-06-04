@@ -2,9 +2,7 @@
 
 public interface IItem
 {
-    string Name { get; set; }
-    int Attack { get; set; }
-    int Defense { get; set; }
+    string Name { get; }
     int GetAttackValue();
     int GetDefenseValue();
 }

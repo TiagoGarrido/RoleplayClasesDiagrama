@@ -1,4 +1,3 @@
-
 namespace Library;
 
 public abstract class HeroeHerencia : Personaje
