@@ -1,6 +1,6 @@
 ﻿namespace Library;
 
-public class Encuentros
+public class Encuentros //comentario
 {
     private List<ICharacter> heroes;
     private List<Enemigo> enemigos;
