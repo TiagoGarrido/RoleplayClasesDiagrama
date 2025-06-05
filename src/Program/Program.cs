@@ -59,19 +59,5 @@ class Program
 // Crear el encuentro
         Encounter encounter = new Encounter(heroes, enemigos); 
         Console.WriteLine(encounter.DoEncounter());
-        /*// Simulación de combate
-                Console.WriteLine(elfo.Attack(Pennino));
-                Console.WriteLine( mago.Attack(enano));
-                Console.WriteLine(mago.CastSpell(enano, bolaDeFuego));
-                Console.WriteLine(mago1.CastSpell(mago, Nevada));
-                Console.WriteLine(enano.Attack(elfo));
-                Console.WriteLine(elfo.Attack(mago1));
-                Console.WriteLine(enano.Heal());
-
-                // Mostrar información final
-                Console.WriteLine(enano.GetInfo());
-                Console.WriteLine(mago.GetInfo());
-                Console.WriteLine(mago1.GetInfo());
-                Console.WriteLine(elfo.GetInfo());*/
     }
 }
