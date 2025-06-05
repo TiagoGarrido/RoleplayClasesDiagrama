@@ -1,11 +1,11 @@
 ﻿namespace Library;
 
-public class Encuentros 
+public class Encounters
 {
     private List<ICharacter> heroes;
     private List<Enemigo> enemigos;
 
-    public Encuentros(List<ICharacter> heroes, List<Enemigo> enemigos)
+    public Encounters(List<ICharacter> heroes, List<Enemigo> enemigos)
     {
         this.heroes = heroes;
         this.enemigos = enemigos;
@@ -13,68 +13,86 @@ public class Encuentros
 
     public void DoEncounter()
     {
-        bool hayHeroesVivos = true;
         bool hayEnemigosVivos = true;
-
+        bool hayHeroesVivos = true;
         while (hayHeroesVivos && hayEnemigosVivos)
         {
-            AtaqueEnemigos();
+            int totalHeroes = heroes.Count;
+            int contador = 0;
 
-            hayHeroesVivos = true;
+            for (int i = 0; i < enemigos.Count; i++)
+            {
+                Enemigo enemigo = enemigos[i];
+                if (enemigo.Health > 0)
+                {
+                    ICharacter objetivo = heroes[contador % totalHeroes];
+
+                    if (objetivo.Health > 0)
+                    {
+                        enemigo.Attack(objetivo);
+                    }
+
+                    contador++;
+                }
+            }
+            
+            hayHeroesVivos = false;
+            for (int i = 0; i < heroes.Count; i++)
+            {
+                if (heroes[i].Health > 0)
+                {
+                    hayHeroesVivos = true;
+                }
+            }
+
             if (!hayHeroesVivos)
             {
-                hayEnemigosVivos = false;
+                hayEnemigosVivos = false; 
             }
             else
             {
-                AtaqueHeroes();
-
-                hayEnemigosVivos = true;
-            }
-        }
-    }
-
-    private void AtaqueEnemigos()
-    {
-        int totalHeroes = heroes.Count;
-        int i = 0;
-
-        for (int e = 0; e < enemigos.Count; e++)
-        {
-            var enemigo = enemigos[e];
-            if (enemigo.Health > 0)
-            {
-                var objetivo = heroes[i % totalHeroes];
-                if (objetivo.Health > 0)
+                for (int i = 0; i < heroes.Count; i++)
                 {
-                    enemigo.Attack(objetivo);
-                }
+                    ICharacter heroe = heroes[i];
 
-                i++;
-            }
-        }
-    }
-
-    private void AtaqueHeroes()
-    {
-        for (int h = 0; h < heroes.Count; h++)
-        {
-            var heroe = heroes[h];
-            if (heroe.Health > 0)
-            {
-                for (int k = 0; k < enemigos.Count; k++)
-                {
-                    var enemigo = enemigos[k];
-                    if (enemigo.Health > 0)
+                    if (heroe.Health > 0)
                     {
-                        int vidaAntes = enemigo.Health;
-                        heroe.Attack(enemigo);
-
-                        if (enemigo.Health <= 0 && vidaAntes > 0)
+                        for (int j = 0; j < enemigos.Count; j++)
                         {
-                            heroe.VictoryPoints += enemigo.VictoryPoints;
-                            enemigo.VictoryPoints = 0;
+                            Enemigo enemigo = enemigos[j];
+
+                            if (enemigo.Health > 0)
+                            {
+                                int vidaAntes = enemigo.Health;
+                                heroe.Attack(enemigo);
+
+                                if (enemigo.Health <= 0 && vidaAntes > 0)
+                                {
+                                    heroe.VictoryPoints += enemigo.VictoryPoints;
+                                    enemigo.VictoryPoints = 0;
+                                }
+                            }
                         }
+                    }
+                }
+                
+                hayEnemigosVivos = false;
+                for (int i = 0; i < enemigos.Count; i++)
+                {
+                    if (enemigos[i].Health > 0)
+                    {
+                        hayEnemigosVivos = true;
+                    }
+                }
+                
+                for (int i = 0; i < heroes.Count; i++)
+                {
+                    ICharacter heroe = heroes[i];
+
+                    if (heroe.Health > 0 && heroe.VictoryPoints >= 5)
+                    {
+                        heroe.Heal();
+                        heroe.VictoryPoints = 0;
                     }
                 }
             }
