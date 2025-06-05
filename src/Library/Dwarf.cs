@@ -2,13 +2,9 @@
 using System.Collections;
 using Library;
 
-public class Dwarf : ICharacter
+public class Dwarf : Heroes, ICharacter
 {
-    public string Name { get; set; }
-    public int Health { get; set; }
-    public int InitialHealth { get; set; }
     private ArrayList items = new ArrayList();
-    public int VictoryPoints { get; set; } = 0;
 
     public Dwarf(string name, int health)
     {
@@ -17,7 +13,7 @@ public class Dwarf : ICharacter
         this.InitialHealth = health;
     }
 
-    public string AddItem(IItem item)
+    public override string AddItem(IItem item)
     {
         if (item != null)
         {
@@ -30,7 +26,7 @@ public class Dwarf : ICharacter
         }
     }
 
-    public string RemoveItem(IItem item)
+    public override string RemoveItem(IItem item)
     {
         if (item != null)
         {
@@ -43,7 +39,7 @@ public class Dwarf : ICharacter
         } 
     }
 
-    public int TotalDamage()
+    public override int TotalDamage()
     {
         int totalattack = 0;
         foreach (IItem item in this.items)
@@ -53,7 +49,7 @@ public class Dwarf : ICharacter
         return totalattack;
     }
 
-    public int TotalDefense()
+    public override int TotalDefense()
     {
         int totalDefense = 0;
         foreach (IItem item in this.items)
@@ -64,7 +60,7 @@ public class Dwarf : ICharacter
         return totalDefense;
     }
 
-    public string Attack(ICharacter target)
+    public override string Attack(ICharacter target)
     {
         if(target.Health <= 0)
         {
@@ -90,21 +86,20 @@ public class Dwarf : ICharacter
         }
     }
 
-
-    public string ReceiveDamage(int damage)
+    public override string ReceiveDamage(int damage)
     {
         this.Health -= damage;
         if (this.Health < 0) this.Health = 0;
         return $"{this.Name} recibe {damage} de daño. Vida restante: {this.Health}";
     }
 
-    public string Heal()
+    public override string Heal()
     {
         this.Health = this.InitialHealth;
         return $"{this.Name} ha sido curado. Vida restaurada a: {this.Health}";
     }
 
-    public string GetInfo()
+    public override string GetInfo()
     {
         string info = $"Nombre: {this.Name}, Vida: {this.Health}/{this.InitialHealth}\nItems:\n";
         foreach (IItem item in this.items)

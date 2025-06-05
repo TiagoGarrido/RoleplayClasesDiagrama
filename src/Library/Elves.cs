@@ -1,13 +1,9 @@
+using System;
 namespace Library;
 using System.Collections;
 
-public class Elves : ICharacter
+public class Elves : Heroes
 {
-    public string Name { get; set; }
-
-    public int VictoryPoints { get; set; } = 0;
-    public int Health { get; set; }
-    public int InitialHealth { get; set; }
     private ArrayList items = new ArrayList();
 
     public Elves(string name, int health)
@@ -17,7 +13,7 @@ public class Elves : ICharacter
         this.InitialHealth = health;
     }
 
-    public string AddItem(IItem item)
+    public override string AddItem(IItem item)
     {
         if (item != null)
         {
@@ -30,7 +26,7 @@ public class Elves : ICharacter
         }
     }
 
-    public string RemoveItem(IItem item)
+    public override string RemoveItem(IItem item)
     {
         if (item != null)
         {
@@ -39,11 +35,11 @@ public class Elves : ICharacter
         }
         else
         {
-            return  "Este item no existe.";
-        } 
+            return "Este item no existe.";
+        }
     }
 
-    public int TotalDamage()
+    public override int TotalDamage()
     {
         int totalatk = 0;
         foreach (IItem item in this.items)
@@ -53,7 +49,7 @@ public class Elves : ICharacter
         return totalatk;
     }
 
-    public int TotalDefense()
+    public override int TotalDefense()
     {
         int totaldef = 0;
         foreach (IItem item in this.items)
@@ -63,20 +59,20 @@ public class Elves : ICharacter
         return totaldef;
     }
 
-    public string ReceiveDamage(int damage)
+    public override string ReceiveDamage(int damage)
     {
         this.Health -= damage;
         if (this.Health < 0) this.Health = 0;
         return $"{this.Name} recibe {damage} de daño. Vida restante: {this.Health}";
     }
 
-    public string Heal()
+    public override string Heal()
     {
         this.Health = this.InitialHealth;
         return $"{this.Name} ha sido curado. Vida restaurada a: {this.Health}";
     }
 
-    public string GetInfo()
+    public override string GetInfo()
     {
         string info = $"Nombre: {this.Name}, Vida: {this.Health}/{this.InitialHealth}\nItems:\n";
         foreach (IItem item in this.items)
@@ -89,9 +85,9 @@ public class Elves : ICharacter
         return info;
     }
 
-    public string Attack(ICharacter target)
+    public override string Attack(ICharacter target)
     {
-       if(target.Health <= 0)
+        if (target.Health <= 0)
         {
             return $"{target.Name} ya no tiene vida para recibir daño.";
         }
