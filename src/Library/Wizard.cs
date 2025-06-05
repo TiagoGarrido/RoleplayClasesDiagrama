@@ -1,15 +1,9 @@
+using System;
 using System.Collections;
-using System.Runtime.InteropServices.JavaScript;
-
 namespace Library;
 
 public class Wizard : Heroes, IMagicalCharacter
 {
-    public string Name { get; set; }
-    public int Health { get; set; }
-    public int VictoryPoints { get; set; } = 0;
-
-    public int InitialHealth { get; set; }
     private ArrayList items = new ArrayList();
     private ISpellbook spellBook;
 
@@ -59,7 +53,6 @@ public class Wizard : Heroes, IMagicalCharacter
             return "Este item no existe.";
         }
     }
-
 
     public string RemoveMagicalItem(IMagicItem item)
     {

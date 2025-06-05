@@ -1,13 +1,9 @@
+using System;
 namespace Library;
 using System.Collections;
 
 public class Elves : Heroes
 {
-    public string Name { get; set; }
-
-    public int VictoryPoints { get; set; } = 0;
-    public int Health { get; set; }
-    public int InitialHealth { get; set; }
     private ArrayList items = new ArrayList();
 
     public Elves(string name, int health)
@@ -30,7 +26,7 @@ public class Elves : Heroes
         }
     }
 
-    public override  string RemoveItem(IItem item)
+    public override string RemoveItem(IItem item)
     {
         if (item != null)
         {
@@ -39,8 +35,8 @@ public class Elves : Heroes
         }
         else
         {
-            return  "Este item no existe.";
-        } 
+            return "Este item no existe.";
+        }
     }
 
     public override int TotalDamage()
@@ -76,7 +72,7 @@ public class Elves : Heroes
         return $"{this.Name} ha sido curado. Vida restaurada a: {this.Health}";
     }
 
-    public override  string GetInfo()
+    public override string GetInfo()
     {
         string info = $"Nombre: {this.Name}, Vida: {this.Health}/{this.InitialHealth}\nItems:\n";
         foreach (IItem item in this.items)
@@ -91,7 +87,7 @@ public class Elves : Heroes
 
     public override string Attack(ICharacter target)
     {
-       if(target.Health <= 0)
+        if (target.Health <= 0)
         {
             return $"{target.Name} ya no tiene vida para recibir daño.";
         }

@@ -2,13 +2,9 @@
 using System.Collections;
 using Library;
 
-public class Dwarf : Heroes
+public class Dwarf : Heroes, ICharacter
 {
-    public string Name { get; set; }
-    public int Health { get; set; }
-    public int InitialHealth { get; set; }
     private ArrayList items = new ArrayList();
-    public int VictoryPoints { get; set; } = 0;
 
     public Dwarf(string name, int health)
     {
@@ -89,7 +85,6 @@ public class Dwarf : Heroes
             }
         }
     }
-
 
     public override string ReceiveDamage(int damage)
     {

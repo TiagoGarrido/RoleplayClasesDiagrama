@@ -16,7 +16,7 @@ public class WizardTests
     }
 
     [Test]
-    public void TestAddItem()
+    public void TestAddMagicalItem()
     {
         IMagicalCharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
         IMagicItem baston = new Baston("Bastón de Fuego", 15);
@@ -29,7 +29,7 @@ public class WizardTests
     }
 
     [Test]
-    public void TestRemoveItem()
+    public void TestRemoveMagicalItem()
     {
         IMagicalCharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
         IMagicItem baston = new Baston("Bastón de Fuego", 15);
@@ -38,6 +38,67 @@ public class WizardTests
         wizard.RemoveMagicalItem(baston);
 
         Assert.That(wizard.GetInfo(), Does.Not.Contain("Bastón de Fuego"));
+        Assert.That(wizard.TotalDamage(), Is.EqualTo(0));
+    }
+
+    [Test]
+    public void TestAddNonMagicalItem()
+    {
+        IMagicalCharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
+        IItem espada = new Espada("Espada de Acero", 10);
+
+        wizard.AddItem(espada);
+
+        Assert.That(wizard.GetInfo(), Does.Contain("Espada de Acero"));
+        Assert.That(wizard.TotalDamage(), Is.EqualTo(10));
+    }
+
+    [Test]
+    public void TestRemoveNonMagicalItem()
+    {
+        IMagicalCharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
+        IItem espada = new Espada("Espada de Acero", 10);
+
+        wizard.AddItem(espada);
+        wizard.RemoveItem(espada);
+
+        Assert.That(wizard.GetInfo(), Does.Not.Contain("Espada de Acero"));
+        Assert.That(wizard.TotalDamage(), Is.EqualTo(0));
+    }
+
+    [Test]
+    public void TestAddMultipleItems()
+    {
+        IMagicalCharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
+        IMagicItem baston = new Baston("Bastón de Fuego", 15);
+        IMagicItem capa = new Capa("Capa Mágica", 10);
+        IItem espada = new Espada("Espada de Acero", 5);
+
+        wizard.AddMagicalItem(baston);
+        wizard.AddMagicalItem(capa);
+        wizard.AddItem(espada);
+
+        Assert.That(wizard.GetInfo(), Does.Contain("Bastón de Fuego"));
+        Assert.That(wizard.GetInfo(), Does.Contain("Capa Mágica"));
+        Assert.That(wizard.GetInfo(), Does.Contain("Espada de Acero"));
+        Assert.That(wizard.TotalDamage(), Is.EqualTo(20));
+        Assert.That(wizard.TotalDefense(), Is.EqualTo(10));
+    }
+
+    [Test]
+    public void TestRemoveMultipleItems()
+    {
+        IMagicalCharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
+        IMagicItem baston = new Baston("Bastón de Fuego", 15);
+        IItem espada = new Espada("Espada de Acero", 10);
+
+        wizard.AddMagicalItem(baston);
+        wizard.AddItem(espada);
+        wizard.RemoveMagicalItem(baston);
+        wizard.RemoveItem(espada);
+
+        Assert.That(wizard.GetInfo(), Does.Not.Contain("Bastón de Fuego"));
+        Assert.That(wizard.GetInfo(), Does.Not.Contain("Espada de Acero"));
         Assert.That(wizard.TotalDamage(), Is.EqualTo(0));
     }
 
@@ -63,20 +124,6 @@ public class WizardTests
     }
 
     [Test]
-    public void TestTotalDamageAndDefense()
-    {
-        IMagicalCharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
-        IMagicItem baston = new Baston("Bastón de Fuego", 15);
-        IMagicItem tunica = new Capa("Túnica Mágica", 10);
-
-        wizard.AddMagicalItem(baston);
-        wizard.AddMagicalItem(tunica);
-
-        Assert.That(wizard.TotalDamage(), Is.EqualTo(15));
-        Assert.That(wizard.TotalDefense(), Is.EqualTo(10));
-    }
-
-    [Test]
     public void TestAttack()
     {
         IMagicalCharacter wizard1 = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
@@ -87,6 +134,20 @@ public class WizardTests
         wizard1.Attack(wizard2);
 
         Assert.That(wizard2.GetInfo(), Does.Contain("Vida: 80"));
+    }
+
+    [Test]
+    public void TestAttackWithNoHealth()
+    {
+        IMagicalCharacter wizard1 = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
+        IMagicalCharacter wizard2 = new Wizard("Saruman", 100, new SpellBook("Libro de Hechizos"));
+        IMagicItem baston = new Baston("Bastón de Fuego", 20);
+
+        wizard1.AddMagicalItem(baston);
+        wizard1.ReceiveDamage(100);
+        wizard1.Attack(wizard2);
+
+        Assert.That(wizard2.GetInfo(), Does.Contain("Vida: 100"));
     }
 
     [Test]
@@ -115,78 +176,5 @@ public class WizardTests
         wizard1.CastSpell(wizard2, fireball);
 
         Assert.That(wizard2.GetInfo(), Does.Contain("Vida: 100"));
-    }
-
-    [Test]
-    public void TestAttackWithNoHealth()
-    {
-        IMagicalCharacter wizard1 = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
-        IMagicalCharacter wizard2 = new Wizard("Saruman", 100, new SpellBook("Otro Libro"));
-        IMagicItem baston = new Baston("Bastón de Fuego", 20);
-
-        wizard1.AddMagicalItem(baston);
-        wizard1.ReceiveDamage(100);
-        wizard1.Attack(wizard2);
-
-        Assert.That(wizard2.GetInfo(), Does.Contain("Vida: 100"));
-    }
-
-    [Test]
-    public void TestAddNonMagicalItem()
-    {
-        IMagicalCharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
-        IItem espada = new Espada("Espada de Acero", 10);
-
-        wizard.AddItem(espada);
-
-        Assert.That(wizard.GetInfo(), Does.Contain("Espada de Acero"));
-        Assert.That(wizard.TotalDamage(), Is.EqualTo(10)); 
-    }
-
-    [Test]
-    public void TestAddMultipleNonMagicalItems()
-    {
-        IMagicalCharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
-        IItem espada = new Espada("Espada de Acero", 10);
-        IItem escudo = new Escudo("Escudo de Hierro", 5);
-
-        wizard.AddItem(espada);
-        wizard.AddItem(escudo);
-
-        Assert.That(wizard.GetInfo(), Does.Contain("Espada de Acero"));
-        Assert.That(wizard.GetInfo(), Does.Contain("Escudo de Hierro"));
-        Assert.That(wizard.TotalDamage(), Is.EqualTo(10));
-        Assert.That(wizard.TotalDefense(), Is.EqualTo(5));
-    }
-
-    [Test]
-    public void TestRemoveNonMagicalItem()
-    {
-        IMagicalCharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
-        IItem espada = new Espada("Espada de Acero", 10);
-
-        wizard.AddItem(espada);
-        wizard.RemoveItem(espada);
-
-        Assert.That(wizard.GetInfo(), Does.Not.Contain("Espada de Acero"));
-        Assert.That(wizard.TotalDamage(), Is.EqualTo(0));
-    }
-
-    [Test]
-    public void TestRemoveMultipleNonMagicalItems()
-    {
-        IMagicalCharacter wizard = new Wizard("Gandalf", 100, new SpellBook("Libro de Hechizos"));
-        IItem espada = new Espada("Espada de Acero", 10);
-        IItem escudo = new Escudo("Escudo de Hierro", 5);
-
-        wizard.AddItem(espada);
-        wizard.AddItem(escudo);
-        wizard.RemoveItem(espada);
-        wizard.RemoveItem(escudo);
-
-        Assert.That(wizard.GetInfo(), Does.Not.Contain("Espada de Acero"));
-        Assert.That(wizard.GetInfo(), Does.Not.Contain("Escudo de Hierro"));
-        Assert.That(wizard.TotalDamage(), Is.EqualTo(0));
-        Assert.That(wizard.TotalDefense(), Is.EqualTo(0));
     }
 }
